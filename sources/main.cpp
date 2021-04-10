@@ -8,6 +8,8 @@
  *
  */
 
+#include "headers/gameinterm.h"
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -34,6 +36,9 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+    GameInterm gameInterm;
+    engine.rootContext()->setContextProperty(QStringLiteral("gameInterm"), &gameInterm);
 
     return app.exec();
 }

@@ -8,6 +8,7 @@ CONFIG += c++17
 
 SOURCES += \
         sources/database.cpp \
+        sources/gameinterm.cpp \
         sources/imagedatabase.cpp \
         sources/infodatabase.cpp \
         sources/main.cpp
@@ -30,5 +31,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     headers/database.h \
+    headers/gameinterm.h \
     headers/imagedatabase.h \
     headers/infodatabase.h
