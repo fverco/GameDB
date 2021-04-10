@@ -12,7 +12,7 @@ class Database : public QObject
 public:
     explicit Database(QObject *parent = nullptr);
     virtual ~Database();
-    virtual bool createDatabase(const QString& dir) = 0;
+    virtual bool createDatabase(const QString& dir) = 0;    ///< Pure virtual function for creating the database.
 
     QString getDBLocation() const;
 

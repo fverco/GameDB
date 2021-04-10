@@ -104,7 +104,6 @@ bool InfoDatabase::createDatabase(const QString &dir) {
 
             if (infoQry.exec()) {
                 createdDb = true;
-                //createTableModels();
                 return true;
             }
             else {
@@ -123,7 +122,6 @@ bool InfoDatabase::createDatabase(const QString &dir) {
             return false;
 
         createdDb = true;
-        //createTableModels();
         return true;
     }
 }
