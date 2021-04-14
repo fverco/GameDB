@@ -8,6 +8,10 @@
  *
  */
 
+/*! \page ERD Entity Relationship Diagram
+ *  \image html "GameDB ERD.png"
+ */
+
 #include "headers/gameinterm.h"
 
 #include <QGuiApplication>
