@@ -4,7 +4,7 @@ Keep record of all your hundreds of games across every possible platform.
 
 ## Build information
 
-|Framework|Compiler|Database
+|Framework|Compiler|DBMS
 |---|---|---|
 |Qt 6.0.3|MinGW 64-bit|SQLite|
 
