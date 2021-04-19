@@ -14,13 +14,15 @@ GameCore::GameCore(const int &gid,
          const int &sid,
          const int &did,
          const int &puid,
-         const int &cid) :
+         const int &cid,
+         const QByteArray &cover) :
     gameId(gid),
     platId(plid),
     servId(sid),
     devId(did),
     pubId(puid),
-    coverId(cid)
+    coverId(cid),
+    coverImage(cover)
 {
 }
 

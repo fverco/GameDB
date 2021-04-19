@@ -1,13 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <QDate>
+#include "gamecore.h"
 
 /*!
  * \brief A class that provides structured storage of game entries.
- * \note This class is a mix up of the Copy and Game tables.
+ * \note This class is a mix up of the Copy and Game tables in the database.
  */
-class Game
+class Game : public GameCore
 {
 public:
     Game(const int &gid,
@@ -15,17 +15,11 @@ public:
          const int &sid,
          const int &did,
          const int &puid,
-         const QString &n,
-         const int &cid = -1);
+         const int &cid,
+         const QString &n);
     Game(const Game &otherGame);
     Game& operator=(const Game& otherGame);
 
-    void setGameId(const int &gid);
-    void setPlatId(const int &pid);
-    void setServId(const int &sid);
-    void setDevId(const int &did);
-    void setPubId(const int &puid);
-    void setCoverId(const int &cid);
     void setName(const QString &n);
     void setExclusive(const bool &excl);
     void setExpansion(const bool &exp);
@@ -37,14 +31,7 @@ public:
     void setServName(const QString &sName);
     void setDevName(const QString &dev);
     void setPubName(const QString &pub);
-    void setCoverImage(const QByteArray &cover);
 
-    int getGameId() const;
-    int getPlatId() const;
-    int getServId() const;
-    int getDevId() const;
-    int getPubId() const;
-    int getCoverId() const;
     QString getName() const;
     bool getExclusive() const;
     bool getExpansion() const;
@@ -56,15 +43,8 @@ public:
     QString getServName() const;
     QString getDevName() const;
     QString getPubName() const;
-    QByteArray getCoverImage() const;
 
 private:
-    int gameId;             ///< The ID of the game entry in the DB.
-    int platId;             ///< The ID of the platform entry in the DB.
-    int servId;             ///< The ID of the server entry in the DB.
-    int devId;              ///< The ID of the developer entry in the DB.
-    int pubId;              ///< The ID of the publisher entry in the DB.
-    int coverId;            ///< The ID of the cover image in the DB.
     QString name;           ///< The name of the game.
     bool exclusive;         ///< Is this game a platform exclusive?
     bool expansion;         ///< Is this game an expansion/DLC of an existing game?
@@ -80,9 +60,9 @@ private:
     QString servName;       ///< The name of the game's online service.
     QString devName;        ///< The name of the game's developer.
     QString pubName;        ///< The name of the game's publisher.
-    QByteArray coverImage;  ///< The full cover image of the game in binary format.
 
-    // This function is just to minimize repetition.
+    // These functions are just to minimize repetition.
+    void assignGameCore(const Game &otherGame);
     void assignGame(const Game &otherGame);
 };
 

@@ -15,7 +15,8 @@ public:
              const int &sid,
              const int &did,
              const int &puid,
-             const int &cid = -1);
+             const int &cid,
+             const QByteArray &cover);
 
     void setGameId(const int &gid);
     void setPlatId(const int &pid);

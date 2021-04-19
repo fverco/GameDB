@@ -9,7 +9,7 @@
  * \param puid = The publisher ID in the database
  * \param n = The name of the game
  * \param cid = The cover ID in the database
- * \note Only the cover ID is optional, the rest must be provided.
+ * \note Any id that is not provided must be -1.
  */
 Game::Game(
      const int &gid,
@@ -17,14 +17,15 @@ Game::Game(
      const int &sid,
      const int &did,
      const int &puid,
-     const QString &n,
-     const int &cid) :
-    gameId(gid),
-    platId(plid),
-    servId(sid),
-    devId(did),
-    pubId(puid),
-    coverId(cid),
+     const int &cid,
+     const QString &n) :
+    GameCore(gid,
+             plid,
+             sid,
+             did,
+             puid,
+             cid,
+             ""),
     name(n),
     exclusive(false),
     expansion(false),
@@ -35,8 +36,7 @@ Game::Game(
     platName(""),
     servName(""),
     devName(""),
-    pubName(""),
-    coverImage("")
+    pubName("")
 {
 }
 
@@ -44,7 +44,15 @@ Game::Game(
  * \brief The copy constructor for Game objects.
  * \param otherGame = The game object from which the values will be copied
  */
-Game::Game(const Game &otherGame) {
+Game::Game(const Game &otherGame) :
+    GameCore(otherGame.gameId,
+             otherGame.platId,
+             otherGame.servId,
+             otherGame.devId,
+             otherGame.pubId,
+             otherGame.coverId,
+             otherGame.coverImage)
+{
     assignGame(otherGame);
 }
 
@@ -54,57 +62,10 @@ Game::Game(const Game &otherGame) {
  * \return A pointer to the variable to the left of the operator
  */
 Game& Game::operator=(const Game& otherGame) {
+    assignGameCore(otherGame);
     assignGame(otherGame);
 
     return *this;
-}
-
-/*!
- * \brief Assigns a new game ID.
- * \param gid = The new game ID
- */
-void Game::setGameId(const int &gid) {
-    gameId = gid;
-}
-
-/*!
- * \brief Assigns a new platform ID.
- * \param pid = The new platform ID
- */
-void Game::setPlatId(const int &pid) {
-    platId = pid;
-}
-
-/*!
- * \brief Assigns a new service ID.
- * \param sid = The new service ID
- */
-void Game::setServId(const int &sid) {
-    servId = sid;
-}
-
-/*!
- * \brief Assigns a new developer ID.
- * \param did = The new developer ID
- */
-void Game::setDevId(const int &did) {
-    devId = did;
-}
-
-/*!
- * \brief Assigns a new publisher ID.
- * \param puid = The new publisher ID
- */
-void Game::setPubId(const int &puid) {
-    pubId = puid;
-}
-
-/*!
- * \brief Assigns a new cover ID.
- * \param cid = The new cover ID
- */
-void Game::setCoverId(const int &cid) {
-    coverId = cid;
 }
 
 /*!
@@ -196,62 +157,6 @@ void Game::setPubName(const QString &pub) {
 }
 
 /*!
- * \brief Assigns a new cover image for the game.
- * \param cover = The new cover image
- */
-void Game::setCoverImage(const QByteArray &cover) {
-    coverImage = cover;
-}
-
-/*!
- * \brief Retrieves the game ID.
- * \return The game ID
- */
-int Game::getGameId() const {
-    return gameId;
-}
-
-/*!
- * \brief Retrieves the plaform ID.
- * \return The platform ID
- */
-int Game::getPlatId() const {
-    return platId;
-}
-
-/*!
- * \brief Retrieves the service ID.
- * \return The service ID
- */
-int Game::getServId() const {
-    return servId;
-}
-
-/*!
- * \brief Retrieves the developer ID.
- * \return The developer ID
- */
-int Game::getDevId() const {
-    return devId;
-}
-
-/*!
- * \brief Retrieves the publisher ID.
- * \return The publisher ID
- */
-int Game::getPubId() const {
-    return pubId;
-}
-
-/*!
- * \brief Retrieves the cover ID.
- * \return The cover ID
- */
-int Game::getCoverId() const {
-    return coverId;
-}
-
-/*!
  * \brief Retrieves the game name.
  * \return The game name
  */
@@ -340,25 +245,26 @@ QString Game::getPubName() const {
 }
 
 /*!
- * \brief Retrieves the cover image.
- * \return The cover image in binary form
- */
-QByteArray Game::getCoverImage() const {
-    return coverImage;
-}
-
-/*!
- * \brief Assigns all the variables of a given Game to the calling Game object.
+ * \brief Assigns all the variables, exlusive to the GameCore class, of a given Game to the calling Game object.
  * \param otherGame = The Game object from which the variables will be copied.
  * \note This function is meant for reducing the repetitive code used in the copy constructor and assignment operator.
  */
-void Game::assignGame(const Game &otherGame) {
+void Game::assignGameCore(const Game &otherGame) {
     gameId = otherGame.gameId;
     platId = otherGame.platId;
     servId = otherGame.servId;
     devId = otherGame.devId;
     pubId = otherGame.pubId;
     coverId = otherGame.coverId;
+    coverImage = otherGame.coverImage;
+}
+
+/*!
+ * \brief Assigns all the variables, exclusive to the Game class, of a given Game to the calling Game object.
+ * \param otherGame = The Game object from which the variables will be copied.
+ * \note This function is meant for reducing the repetitive code used in the copy constructor and assignment operator.
+ */
+void Game::assignGame(const Game &otherGame) {
     name = otherGame.name;
     exclusive = otherGame.exclusive;
     expansion = otherGame.expansion;
@@ -370,5 +276,4 @@ void Game::assignGame(const Game &otherGame) {
     servName = otherGame.servName;
     devName = otherGame.devName;
     pubName = otherGame.pubName;
-    coverImage = otherGame.coverImage;
 }
