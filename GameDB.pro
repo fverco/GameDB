@@ -14,7 +14,9 @@ SOURCES += \
         sources/gameinterm.cpp \
         sources/imagedatabase.cpp \
         sources/infodatabase.cpp \
-        sources/main.cpp
+        sources/main.cpp \
+        sources/platform.cpp \
+        sources/platformchanges.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,4 +41,6 @@ HEADERS += \
     headers/gamecore.h \
     headers/gameinterm.h \
     headers/imagedatabase.h \
-    headers/infodatabase.h
+    headers/infodatabase.h \
+    headers/platform.h \
+    headers/platformchanges.h
