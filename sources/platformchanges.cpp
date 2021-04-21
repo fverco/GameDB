@@ -11,6 +11,17 @@ PlatformChanges::PlatformChanges(const int &pid) :
 }
 
 /*!
+ * \brief Creates a PlatformChanges object from a Platform object.
+ * \param plat = The Platform that should be changed
+ * \note This is the same as a default constructor, except it uses the ID of the given Platform object.
+ */
+PlatformChanges::PlatformChanges(const Platform &plat) :
+    platId(plat.getPlatId()),
+    iterator(0)
+{
+}
+
+/*!
  * \brief The copy constructor for PlatformChanges objects.
  * \param otherChanges = The other PlatformChanges object from where the values will be copied.
  */
@@ -109,7 +120,7 @@ int PlatformChanges::getCurrentPlatId() const {
 /*!
  * \brief Returns a data structure with all platform changes.
  * \return  A QHash with the form of <(Change ID), <(Change type, Change value)> >
- * \example A case where only the name of the platform was changed: <0, <"Name", "Playstation 3">>
+ * \note A case where only the name of the platform was changed: <0, <"Name", "Playstation 3">>
  */
 QHash<int, QPair<QString, QVariant> > PlatformChanges::getAllChanges() const {
     return changes;

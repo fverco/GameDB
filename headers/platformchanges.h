@@ -12,6 +12,7 @@ class PlatformChanges
 {
 public:
     PlatformChanges(const int &pid);
+    PlatformChanges(const Platform &plat);
     PlatformChanges(const PlatformChanges &otherChanges);
     PlatformChanges& operator=(const PlatformChanges &otherChanges);
     int size() const;
