@@ -19,13 +19,13 @@ Game::Game(
      const int &puid,
      const int &cid,
      const QString &n) :
-    GameCore(gid,
-             plid,
-             sid,
-             did,
-             puid,
-             cid,
-             ""),
+    gameId(gid),
+    platId(plid),
+    servId(sid),
+    devId(did),
+    pubId(puid),
+    coverId(cid),
+    coverImage(""),
     name(n),
     exclusive(false),
     expansion(false),
@@ -45,13 +45,13 @@ Game::Game(
  * \param otherGame = The game object from which the values will be copied
  */
 Game::Game(const Game &otherGame) :
-    GameCore(otherGame.gameId,
-             otherGame.platId,
-             otherGame.servId,
-             otherGame.devId,
-             otherGame.pubId,
-             otherGame.coverId,
-             otherGame.coverImage),
+    gameId(otherGame.gameId),
+    platId(otherGame.platId),
+    servId(otherGame.servId),
+    devId(otherGame.devId),
+    pubId(otherGame.pubId),
+    coverId(otherGame.coverId),
+    coverImage(otherGame.coverImage),
     name(otherGame.name),
     exclusive(otherGame.exclusive),
     expansion(otherGame.expansion),
@@ -92,6 +92,62 @@ Game& Game::operator=(const Game& otherGame) {
     pubName = otherGame.pubName;
 
     return *this;
+}
+
+/*!
+ * \brief Assigns a new game ID.
+ * \param gid = The new game ID
+ */
+void Game::setGameId(const int &gid) {
+    gameId = gid;
+}
+
+/*!
+ * \brief Assigns a new platform ID.
+ * \param pid = The new platform ID
+ */
+void Game::setPlatId(const int &pid) {
+    platId = pid;
+}
+
+/*!
+ * \brief Assigns a new service ID.
+ * \param sid = The new service ID
+ */
+void Game::setServId(const int &sid) {
+    servId = sid;
+}
+
+/*!
+ * \brief Assigns a new developer ID.
+ * \param did = The new developer ID
+ */
+void Game::setDevId(const int &did) {
+    devId = did;
+}
+
+/*!
+ * \brief Assigns a new publisher ID.
+ * \param puid = The new publisher ID
+ */
+void Game::setPubId(const int &puid) {
+    pubId = puid;
+}
+
+/*!
+ * \brief Assigns a new cover ID.
+ * \param cid = The new cover ID
+ */
+void Game::setCoverId(const int &cid) {
+    coverId = cid;
+}
+
+/*!
+ * \brief Assigns a new cover image for the game.
+ * \param cover = The new cover image
+ */
+void Game::setCoverImage(const QByteArray &cover) {
+    coverImage = cover;
 }
 
 /*!
@@ -180,6 +236,62 @@ void Game::setDevName(const QString &dev) {
  */
 void Game::setPubName(const QString &pub) {
     pubName = pub;
+}
+
+/*!
+ * \brief Retrieves the game ID.
+ * \return The game ID
+ */
+int Game::getGameId() const {
+    return gameId;
+}
+
+/*!
+ * \brief Retrieves the plaform ID.
+ * \return The platform ID
+ */
+int Game::getPlatId() const {
+    return platId;
+}
+
+/*!
+ * \brief Retrieves the service ID.
+ * \return The service ID
+ */
+int Game::getServId() const {
+    return servId;
+}
+
+/*!
+ * \brief Retrieves the developer ID.
+ * \return The developer ID
+ */
+int Game::getDevId() const {
+    return devId;
+}
+
+/*!
+ * \brief Retrieves the publisher ID.
+ * \return The publisher ID
+ */
+int Game::getPubId() const {
+    return pubId;
+}
+
+/*!
+ * \brief Retrieves the cover ID.
+ * \return The cover ID
+ */
+int Game::getCoverId() const {
+    return coverId;
+}
+
+/*!
+ * \brief Retrieves the cover image.
+ * \return The cover image in binary form
+ */
+QByteArray Game::getCoverImage() const {
+    return coverImage;
 }
 
 /*!

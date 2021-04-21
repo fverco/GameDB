@@ -6,24 +6,23 @@
 #include <QDate>
 
 /*!
- * \brief Class used to extract all the differences between two Game object.
+ * \brief Class used to extract all the differences between two Game objects.
  */
-class GameChanges : public GameCore
+class GameChanges
 {
 public:
-    GameChanges(const int &gId,
-                const int &plId,
-                const int &sId,
-                const int &dId,
-                const int &puId,
-                const int &cId);
+    GameChanges(const int &gid,
+                const int &plid,
+                const int &sid,
+                const int &did,
+                const int &puid,
+                const int &cid);
+    GameChanges(const Game &game);
     GameChanges(const GameChanges &otherChanges);
     GameChanges& operator=(const GameChanges &otherChanges);
     int size() const;
     QPair<QString, QVariant> next();
     bool hasNext() const;
-    bool coverIdIsChanged() const;
-    bool coverImageIsChanged() const;
     void toStart();
 
     void setNewGameId(const int &gid);
@@ -33,27 +32,37 @@ public:
     void setNewPubId(const int &puid);
     void setNewCoverId(const int &cid);
     void setNewCoverImage(const QByteArray &cover);
+    void setNewName(const QString &n);
+    void setNewExclusive(const bool &excl);
+    void setNewExpansion(const bool &exp);
+    void setNewReleaseDate(const QDate &rel);
+    void setNewPhysical(const bool &phys);
+    void setNewEdition(const QString &ed);
+    void setNewDateAdded(const QDate &added);
+    void setNewPlatName(const QString &pName);
+    void setNewServName(const QString &sName);
+    void setNewDevName(const QString &dev);
+    void setNewPubName(const QString &pub);
 
-    void setName(const QString &n);
-    void setExclusive(const bool &excl);
-    void setExpansion(const bool &exp);
-    void setReleaseDate(const QDate &rel);
-    void setPhysical(const bool &phys);
-    void setEdition(const QString &ed);
-    void setDateAdded(const QDate &added);
-    void setPlatName(const QString &pName);
-    void setServName(const QString &sName);
-    void setDevName(const QString &dev);
-    void setPubName(const QString &pub);
+    int getCurrentGameId() const;
+    int getCurrentPlatId() const;
+    int getCurrentServId() const;
+    int getCurrentDevId() const;
+    int getCurrentPubId() const;
+    int getCurrentCoverId() const;
 
     QHash<int, QPair<QString, QVariant> > getAllChanges() const;
 
     static GameChanges changesFrom(const Game &beforeChanges, const Game &afterChanges);
 
 private:
-    int iterator;            ///< Used to iterate through the list of changes
-    bool coverImageChanged;  ///< Has the cover image been changed?
-    bool coverIdChanged;     ///< Has the cover ID been changed?
+    int gameId;                 ///< The game ID
+    int platId;                 ///< The platform ID
+    int servId;                 ///< The service ID
+    int devId;                  ///< The developer ID
+    int pubId;                  ///< The publisher ID
+    int coverId;                ///< The cover ID
+    int iterator;               ///< Used to iterate through the list of changes
     QHash<int, QPair<QString, QVariant> > changes;  ///< A dynamic list of all remaining changes to the game
 };
 
