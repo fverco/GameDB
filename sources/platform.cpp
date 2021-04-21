@@ -40,34 +40,66 @@ Platform& Platform::operator=(const Platform& otherPlat) {
     return *this;
 }
 
+/*!
+ * \brief Assigns a new platform ID.
+ * \param pid = The new platform ID
+ */
 void Platform::setPlatId(const int &pid) {
     platId = pid;
 }
 
+/*!
+ * \brief Assigns a new platform name.
+ * \param n = The new platform name
+ */
 void Platform::setName(const QString& n) {
     name = n;
 }
 
+/*!
+ * \brief Assigns a new console generation number.
+ * \param gen = The new console generation
+ */
 void Platform::setGeneration(const int& gen) {
     generation = gen;
 }
 
+/*!
+ * \brief Assigns a new release date of the platform.
+ * \param rel = The new release date
+ */
 void Platform::setReleaseDate(const QDate& rel) {
     releaseDate = rel;
 }
 
+/*!
+ * \brief Returns the platform ID.
+ * \return An integer with the platform ID
+ */
 int Platform::getPlatId() const {
     return platId;
 }
 
+/*!
+ * \brief Returns the platform name.
+ * \return A QString with the platform name
+ */
 QString Platform::getName() const {
     return name;
 }
 
+/*!
+ * \brief Returns the platform's console generation.
+ * \return An integer with the console generation number
+ */
 int Platform::getGeneration() const {
     return generation;
 }
 
+/*!
+ * \brief Returns the platform's release date.
+ * \return A QDate with the release date
+ */
 QDate Platform::getReleaseDate() const {
     return releaseDate;
 }
