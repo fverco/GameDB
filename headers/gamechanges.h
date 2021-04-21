@@ -55,10 +55,6 @@ private:
     bool coverImageChanged;  ///< Has the cover image been changed?
     bool coverIdChanged;     ///< Has the cover ID been changed?
     QHash<int, QPair<QString, QVariant> > changes;  ///< A dynamic list of all remaining changes to the game
-
-    // These functions are meant to minimize repetitive code used in the copy constructor and assignment operator.
-    void assignGameCore(const GameChanges &otherChanges);
-    void assignGameChanges(const GameChanges &otherChanges);
 };
 
 #endif // GAMECHANGES_H

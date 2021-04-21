@@ -60,10 +60,6 @@ private:
     QString servName;       ///< The name of the game's online service.
     QString devName;        ///< The name of the game's developer.
     QString pubName;        ///< The name of the game's publisher.
-
-    // These functions are just to minimize repetition.
-    void assignGameCore(const Game &otherGame);
-    void assignGame(const Game &otherGame);
 };
 
 #endif // GAME_H

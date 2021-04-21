@@ -51,9 +51,19 @@ Game::Game(const Game &otherGame) :
              otherGame.devId,
              otherGame.pubId,
              otherGame.coverId,
-             otherGame.coverImage)
+             otherGame.coverImage),
+    name(otherGame.name),
+    exclusive(otherGame.exclusive),
+    expansion(otherGame.expansion),
+    releaseDate(otherGame.releaseDate),
+    physical(otherGame.physical),
+    edition(otherGame.edition),
+    dateAdded(otherGame.dateAdded),
+    platName(otherGame.platName),
+    servName(otherGame.servName),
+    devName(otherGame.devName),
+    pubName(otherGame.pubName)
 {
-    assignGame(otherGame);
 }
 
 /*!
@@ -62,8 +72,24 @@ Game::Game(const Game &otherGame) :
  * \return A pointer to the variable to the left of the operator
  */
 Game& Game::operator=(const Game& otherGame) {
-    assignGameCore(otherGame);
-    assignGame(otherGame);
+    gameId = otherGame.gameId;
+    platId = otherGame.platId;
+    servId = otherGame.servId;
+    devId = otherGame.devId;
+    pubId = otherGame.pubId;
+    coverId = otherGame.coverId;
+    coverImage = otherGame.coverImage;
+    name = otherGame.name;
+    exclusive = otherGame.exclusive;
+    expansion = otherGame.expansion;
+    releaseDate = otherGame.releaseDate;
+    physical = otherGame.physical;
+    edition = otherGame.edition;
+    dateAdded = otherGame.dateAdded;
+    platName = otherGame.platName;
+    servName = otherGame.servName;
+    devName = otherGame.devName;
+    pubName = otherGame.pubName;
 
     return *this;
 }
@@ -242,38 +268,4 @@ QString Game::getDevName() const {
  */
 QString Game::getPubName() const {
     return pubName;
-}
-
-/*!
- * \brief Assigns all the variables, exlusive to the GameCore class, of a given Game to the calling Game object.
- * \param otherGame = The Game object from which the variables will be copied.
- * \note This function is meant for reducing the repetitive code used in the copy constructor and assignment operator.
- */
-void Game::assignGameCore(const Game &otherGame) {
-    gameId = otherGame.gameId;
-    platId = otherGame.platId;
-    servId = otherGame.servId;
-    devId = otherGame.devId;
-    pubId = otherGame.pubId;
-    coverId = otherGame.coverId;
-    coverImage = otherGame.coverImage;
-}
-
-/*!
- * \brief Assigns all the variables, exclusive to the Game class, of a given Game to the calling Game object.
- * \param otherGame = The Game object from which the variables will be copied.
- * \note This function is meant for reducing the repetitive code used in the copy constructor and assignment operator.
- */
-void Game::assignGame(const Game &otherGame) {
-    name = otherGame.name;
-    exclusive = otherGame.exclusive;
-    expansion = otherGame.expansion;
-    releaseDate = otherGame.releaseDate;
-    physical = otherGame.physical;
-    edition = otherGame.edition;
-    dateAdded = otherGame.dateAdded;
-    platName = otherGame.platName;
-    servName = otherGame.servName;
-    devName = otherGame.devName;
-    pubName = otherGame.pubName;
 }

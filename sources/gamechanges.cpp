@@ -41,9 +41,12 @@ GameChanges::GameChanges(const GameChanges &otherChanges) :
              otherChanges.devId,
              otherChanges.pubId,
              otherChanges.coverId,
-             otherChanges.coverImage)
+             otherChanges.coverImage),
+    iterator(otherChanges.iterator),
+    coverImageChanged(otherChanges.coverImageChanged),
+    coverIdChanged(otherChanges.coverIdChanged),
+    changes(otherChanges.changes)
 {
-    assignGameChanges(otherChanges);
 }
 
 /*!
@@ -52,8 +55,17 @@ GameChanges::GameChanges(const GameChanges &otherChanges) :
  * \return A pointer to the GameChanges object on the left of the assignment operator.
  */
 GameChanges& GameChanges::operator=(const GameChanges &otherChanges) {
-    assignGameCore(otherChanges);
-    assignGameChanges(otherChanges);
+    gameId = otherChanges.gameId;
+    platId = otherChanges.platId;
+    servId = otherChanges.servId;
+    devId = otherChanges.devId;
+    pubId = otherChanges.pubId;
+    coverId = otherChanges.coverId;
+    coverImage = otherChanges.coverImage;
+    iterator = otherChanges.iterator;
+    coverImageChanged = otherChanges.coverImageChanged;
+    coverIdChanged = otherChanges.coverIdChanged;
+    changes = otherChanges.changes;
 
     return *this;
 }
@@ -331,31 +343,4 @@ GameChanges GameChanges::changesFrom(const Game &gameA, const Game &gameB) {
         changes.setDateAdded(gameB.getDateAdded());
 
     return changes;
-}
-
-/*!
- * \brief Assigns all the variables, exclusive to the GameCore class, of a given GameChanges to the calling GameChanges object.
- * \param otherChanges = The GameChanges object from which the variables will be copied.
- * \note This function is meant for reducing the repetitive code used in the copy constructor and assignment operator.
- */
-void GameChanges::assignGameCore(const GameChanges& otherChanges) {
-    gameId = otherChanges.gameId;
-    platId = otherChanges.platId;
-    servId = otherChanges.servId;
-    devId = otherChanges.devId;
-    pubId = otherChanges.pubId;
-    coverId = otherChanges.coverId;
-    coverImage = otherChanges.coverImage;
-}
-
-/*!
- * \brief Assigns all the variables, exclusive to the GameChanges class, of a given GameChanges to the calling GameChanges object.
- * \param otherChanges = The GameChanges object from which the variables will be copied.
- * \note This function is meant for reducing the repetitive code used in the copy constructor and assignment operator.
- */
-void GameChanges::assignGameChanges(const GameChanges& otherChanges) {
-    iterator = otherChanges.iterator;
-    coverImageChanged = otherChanges.coverImageChanged;
-    coverIdChanged = otherChanges.coverIdChanged;
-    changes = otherChanges.changes;
 }
