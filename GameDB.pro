@@ -15,7 +15,9 @@ SOURCES += \
         sources/infodatabase.cpp \
         sources/main.cpp \
         sources/platform.cpp \
-        sources/platformchanges.cpp
+        sources/platformchanges.cpp \
+        sources/service.cpp \
+        sources/servicechanges.cpp
 
 RESOURCES += qml.qrc
 
@@ -41,4 +43,6 @@ HEADERS += \
     headers/imagedatabase.h \
     headers/infodatabase.h \
     headers/platform.h \
-    headers/platformchanges.h
+    headers/platformchanges.h \
+    headers/service.h \
+    headers/servicechanges.h
