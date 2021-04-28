@@ -9,6 +9,7 @@ CONFIG += c++17
 SOURCES += \
         sources/database.cpp \
         sources/developer.cpp \
+        sources/developerchanges.cpp \
         sources/entry.cpp \
         sources/entrychanges.cpp \
         sources/game.cpp \
@@ -41,6 +42,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     headers/database.h \
     headers/developer.h \
+    headers/developerchanges.h \
     headers/entry.h \
     headers/entrychanges.h \
     headers/game.h \
