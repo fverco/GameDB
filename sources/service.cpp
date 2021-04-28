@@ -6,8 +6,7 @@
  * \param n = The name of the service
  */
 Service::Service(const int &sid, const QString &n) :
-    servId(sid),
-    name(n)
+    Entry(sid, n)
 {
 }
 
@@ -16,8 +15,7 @@ Service::Service(const int &sid, const QString &n) :
  * \param otherServ = The service object from which the values will be copied
  */
 Service::Service(const Service& otherServ) :
-    servId(otherServ.servId),
-    name(otherServ.name)
+    Entry(otherServ.id, otherServ.name)
 {
 }
 
@@ -27,40 +25,17 @@ Service::Service(const Service& otherServ) :
  * \return A pointer to the variable to the left of the operator
  */
 Service& Service::operator=(const Service& otherServ) {
-    servId = otherServ.servId;
+    id = otherServ.id;
     name = otherServ.name;
 
     return *this;
 }
 
 /*!
- * \brief Assigns a new service ID.
- * \param sid = The new service ID
+ * \brief Returns the type of entry the calling object is.
+ * \return  An EntryTypes enum of Service
+ * \note The returning value will always be the Service enum.
  */
-void Service::setServId(const int &sid) {
-    servId = sid;
-}
-
-/*!
- * \brief Assigns a new service name.
- * \param n = The new service name
- */
-void Service::setName(const QString &n) {
-    name = n;
-}
-
-/*!
- * \brief Returns the service ID.
- * \return An integer with the service ID
- */
-int Service::getServId() const {
-    return servId;
-}
-
-/*!
- * \brief Returns the service name.
- * \return A QString with the service name
- */
-QString Service::getName() const {
-    return name;
+EntryTypes Service::getEntryType() const {
+    return EntryTypes::Service;
 }
