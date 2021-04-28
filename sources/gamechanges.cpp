@@ -17,13 +17,12 @@ GameChanges::GameChanges(
         const int &did,
         const int &puid,
         const int &cid) :
-    gameId(gid),
+    EntryChanges(gid),
     platId(plid),
     servId(sid),
     devId(did),
     pubId(puid),
-    coverId(cid),
-    iterator(0)
+    coverId(cid)
 {
 }
 
@@ -32,14 +31,13 @@ GameChanges::GameChanges(
  * \param game = The Game object that should be changed
  * \note This is the same as a default constructor, except it uses the IDs from the given Game object.
  */
-GameChanges::GameChanges(const Game &game) :
-    gameId(game.getGameId()),
+GameChanges::GameChanges(Game &game) :
+    EntryChanges(&game),
     platId(game.getPlatId()),
     servId(game.getServId()),
     devId(game.getDevId()),
     pubId(game.getPubId()),
-    coverId(game.getCoverId()),
-    iterator(0)
+    coverId(game.getCoverId())
 {
 }
 
@@ -47,15 +45,13 @@ GameChanges::GameChanges(const Game &game) :
  * \brief The copy constructor for GameChanges objects.
  * \param otherChanges = The other GameChanges object from where the values will be copied.
  */
-GameChanges::GameChanges(const GameChanges &otherChanges) :
-    gameId(otherChanges.gameId),
+GameChanges::GameChanges(GameChanges &otherChanges) :
+    EntryChanges(&otherChanges),
     platId(otherChanges.platId),
     servId(otherChanges.servId),
     devId(otherChanges.devId),
     pubId(otherChanges.pubId),
-    coverId(otherChanges.coverId),
-    iterator(otherChanges.iterator),
-    changes(otherChanges.changes)
+    coverId(otherChanges.coverId)
 {
 }
 
@@ -65,7 +61,7 @@ GameChanges::GameChanges(const GameChanges &otherChanges) :
  * \return A pointer to the GameChanges object on the left of the assignment operator.
  */
 GameChanges& GameChanges::operator=(const GameChanges &otherChanges) {
-    gameId = otherChanges.gameId;
+    currentId = otherChanges.currentId;
     platId = otherChanges.platId;
     servId = otherChanges.servId;
     devId = otherChanges.devId;
@@ -78,43 +74,12 @@ GameChanges& GameChanges::operator=(const GameChanges &otherChanges) {
 }
 
 /*!
- * \brief Returns the amount of changes to the Game.
- * \return An integer with the size of the changes data structure.
- */
-int GameChanges::size() const {
-    return changes.size();
-}
-
-/*!
- * \brief Returns the change currently pointed to, then moves up by one spot.
- * \return A QPair in the form of <(Value type changed), (New Value)>.
- */
-QPair<QString, QVariant> GameChanges::next() {
-    return changes.value(iterator++);
-}
-
-/*!
- * \brief Are there more changes left in the list?
- * \return A boolean value.
- */
-bool GameChanges::hasNext() const {
-    return (iterator < size() ? true:false);
-}
-
-/*!
- * \brief Moves the iterator back to the start.
- */
-void GameChanges::toStart() {
-    iterator = 0;
-}
-
-/*!
  * \brief Adds a new Game ID to the list of changes.
  * \param gid = The new Game ID
  * \note The previous Game ID is still kept for reference.
  */
-void GameChanges::setNewGameId(const int& gid) {
-    changes[changes.size()] = qMakePair(QString("Game ID"), gid);
+void GameChanges::setNewId(const int& newId) {
+    changes[changes.size()] = qMakePair(ChangeTypes::Game_ID, newId);
 }
 
 /*!
@@ -123,7 +88,7 @@ void GameChanges::setNewGameId(const int& gid) {
  * \note The previous Platform ID is still kept for reference.
  */
 void GameChanges::setNewPlatId(const int& plid) {
-    changes[changes.size()] = qMakePair(QString("Platform ID"), plid);
+    changes[changes.size()] = qMakePair(ChangeTypes::Platform_ID, plid);
 }
 
 /*!
@@ -132,7 +97,7 @@ void GameChanges::setNewPlatId(const int& plid) {
  * \note The previous Service ID is still kept for reference.
  */
 void GameChanges::setNewServId(const int& sid) {
-    changes[changes.size()] = qMakePair(QString("Service ID"), sid);
+    changes[changes.size()] = qMakePair(ChangeTypes::Service_ID, sid);
 }
 
 /*!
@@ -141,7 +106,7 @@ void GameChanges::setNewServId(const int& sid) {
  * \note The previous Developer ID is still kept for reference.
  */
 void GameChanges::setNewDevId(const int& did) {
-    changes[changes.size()] = qMakePair(QString("Developer ID"), did);
+    changes[changes.size()] = qMakePair(ChangeTypes::Developer_ID, did);
 }
 
 /*!
@@ -150,7 +115,7 @@ void GameChanges::setNewDevId(const int& did) {
  * \note The previous Publisher ID is still kept for reference.
  */
 void GameChanges::setNewPubId(const int& puid) {
-    changes[changes.size()] = qMakePair(QString("Publisher ID"), puid);
+    changes[changes.size()] = qMakePair(ChangeTypes::Publisher_ID, puid);
 }
 
 /*!
@@ -159,7 +124,7 @@ void GameChanges::setNewPubId(const int& puid) {
  * \note The previous Cover ID is still kept for reference.
  */
 void GameChanges::setNewCoverId(const int& cid) {
-    changes[changes.size()] = qMakePair(QString("Cover ID"), cid);
+    changes[changes.size()] = qMakePair(ChangeTypes::Cover_ID, cid);
 }
 
 /*!
@@ -168,7 +133,7 @@ void GameChanges::setNewCoverId(const int& cid) {
  * \note This does not change the cover ID. You must remember to change it yourself if necessary.
  */
 void GameChanges::setNewCoverImage(const QByteArray &cover) {
-    changes[changes.size()] = qMakePair(QString("Cover Image"), cover);
+    changes[changes.size()] = qMakePair(ChangeTypes::Cover_Image, cover);
 }
 
 /*!
@@ -176,7 +141,7 @@ void GameChanges::setNewCoverImage(const QByteArray &cover) {
  * \param n = The new name
  */
 void GameChanges::setNewName(const QString& n) {
-    changes[changes.size()] = qMakePair(QString("Name"), n);
+    changes[changes.size()] = qMakePair(ChangeTypes::Name, n);
 }
 
 /*!
@@ -184,7 +149,7 @@ void GameChanges::setNewName(const QString& n) {
  * \param excl = The new exclusive status
  */
 void GameChanges::setNewExclusive(const bool& excl) {
-    changes[changes.size()] = qMakePair(QString("Exclusive"), excl);
+    changes[changes.size()] = qMakePair(ChangeTypes::Exclusive, excl);
 }
 
 /*!
@@ -192,7 +157,7 @@ void GameChanges::setNewExclusive(const bool& excl) {
  * \param exp = The new expansion status
  */
 void GameChanges::setNewExpansion(const bool& exp) {
-    changes[changes.size()] = qMakePair(QString("Expansion"), exp);
+    changes[changes.size()] = qMakePair(ChangeTypes::Expansion, exp);
 }
 
 /*!
@@ -200,7 +165,7 @@ void GameChanges::setNewExpansion(const bool& exp) {
  * \param rel = The new release date
  */
 void GameChanges::setNewReleaseDate(const QDate& rel) {
-    changes[changes.size()] = qMakePair(QString("Release Date"), rel);
+    changes[changes.size()] = qMakePair(ChangeTypes::Release_Date, rel);
 }
 
 /*!
@@ -208,7 +173,7 @@ void GameChanges::setNewReleaseDate(const QDate& rel) {
  * \param phys = The new physical status
  */
 void GameChanges::setNewPhysical(const bool& phys) {
-    changes[changes.size()] = qMakePair(QString("Physical"), phys);
+    changes[changes.size()] = qMakePair(ChangeTypes::Physical, phys);
 }
 
 /*!
@@ -216,7 +181,7 @@ void GameChanges::setNewPhysical(const bool& phys) {
  * \param ed = The new edition
  */
 void GameChanges::setNewEdition(const QString& ed) {
-    changes[changes.size()] = qMakePair(QString("Edition"), ed);
+    changes[changes.size()] = qMakePair(ChangeTypes::Edition, ed);
 }
 
 /*!
@@ -224,52 +189,7 @@ void GameChanges::setNewEdition(const QString& ed) {
  * \param added = The new date added
  */
 void GameChanges::setNewDateAdded(const QDate &added) {
-    changes[changes.size()] = qMakePair(QString("Date Added"), added);
-}
-
-/*!
- * \brief Changes the platform name for the platform ID this object stores.
- * \param pName = The new platform name
- * \note This does not add a new platform name to the list of changes, because that name is only used for quick access.
- */
-void GameChanges::setNewPlatName(const QString &pName) {
-    changes[changes.size()] = qMakePair(QString("Platform Name"), pName);
-}
-
-/*!
- * \brief Changes the service name for the service ID this object stores.
- * \param sName = The new service name
- * \note This does not add a new service name to the list of changes, because that name is only used for quick access.
- */
-void GameChanges::setNewServName(const QString &sName) {
-    changes[changes.size()] = qMakePair(QString("Service Name"), sName);
-}
-
-/*!
- * \brief Changes the developer name for the developer ID this object stores.
- * \param dev = The new developer name
- * \note This does not add a new developer name to the list of changes, because that name is only used for quick access.
- */
-void GameChanges::setNewDevName(const QString &dev) {
-    changes[changes.size()] = qMakePair(QString("Developer Name"), dev);
-}
-
-/*!
- * \brief Changes the publisher name for the publisher ID this object stores.
- * \param pub = The new publisher name
- * \note This does not add a new publisher name to the list of changes, because that name is only used for quick access.
- */
-void GameChanges::setNewPubName(const QString &pub) {
-    changes[changes.size()] = qMakePair(QString("Publisher Name"), pub);
-}
-
-/*!
- * \brief Returns the current Game ID.
- * \return An integer of the Game ID.
- * \note This is the Game ID to which this Changes object refers to, to be changed.
- */
-int GameChanges::getCurrentGameId() const {
-    return gameId;
+    changes[changes.size()] = qMakePair(ChangeTypes::Date_Added, added);
 }
 
 /*!
@@ -318,15 +238,6 @@ int GameChanges::getCurrentCoverId() const {
 }
 
 /*!
- * \brief Returns a data structure with all game changes.
- * \return A QHash with the form of <(Change ID), <(Change type, Change value)> >
- * \note A case where only the name of the Game was changed: <0, <"Name", "Half-Life 3">>
- */
-QHash<int, QPair<QString, QVariant> > GameChanges::getAllChanges() const {
-    return changes;
-}
-
-/*!
  * \brief Generate a GameChanges object from differences between two Game objects.
  * \param gameA = The main game object
  * \param gameB = The second game object
@@ -334,15 +245,15 @@ QHash<int, QPair<QString, QVariant> > GameChanges::getAllChanges() const {
  * \note The first parameter is always regarded as the main object that should be changed.
  */
 GameChanges GameChanges::changesFrom(const Game &gameA, const Game &gameB) {
-    GameChanges changes(gameA.getGameId(),
+    GameChanges changes(gameA.getId(),
                         gameA.getPlatId(),
                         gameA.getServId(),
                         gameA.getDevId(),
                         gameA.getPubId(),
                         gameA.getCoverId());
 
-    if (gameA.getGameId() != gameB.getGameId())
-        changes.setNewGameId(gameB.getGameId());
+    if (gameA.getId() != gameB.getId())
+        changes.setNewId(gameB.getId());
 
     if (gameA.getPlatId() != gameB.getPlatId())
         changes.setNewPlatId(gameB.getPlatId());

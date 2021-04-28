@@ -19,24 +19,19 @@ Game::Game(
      const int &puid,
      const int &cid,
      const QString &n) :
-    gameId(gid),
+    Entry(gid, n),
     platId(plid),
     servId(sid),
     devId(did),
     pubId(puid),
     coverId(cid),
     coverImage(""),
-    name(n),
     exclusive(false),
     expansion(false),
     releaseDate(QDate(2000,1,1)),
     physical(false),
     edition("Standard Edition"),
-    dateAdded(QDate(2000,1,1)),
-    platName(""),
-    servName(""),
-    devName(""),
-    pubName("")
+    dateAdded(QDate(2000,1,1))
 {
 }
 
@@ -45,24 +40,19 @@ Game::Game(
  * \param otherGame = The game object from which the values will be copied
  */
 Game::Game(const Game &otherGame) :
-    gameId(otherGame.gameId),
+    Entry(otherGame.id, otherGame.name),
     platId(otherGame.platId),
     servId(otherGame.servId),
     devId(otherGame.devId),
     pubId(otherGame.pubId),
     coverId(otherGame.coverId),
     coverImage(otherGame.coverImage),
-    name(otherGame.name),
     exclusive(otherGame.exclusive),
     expansion(otherGame.expansion),
     releaseDate(otherGame.releaseDate),
     physical(otherGame.physical),
     edition(otherGame.edition),
-    dateAdded(otherGame.dateAdded),
-    platName(otherGame.platName),
-    servName(otherGame.servName),
-    devName(otherGame.devName),
-    pubName(otherGame.pubName)
+    dateAdded(otherGame.dateAdded)
 {
 }
 
@@ -72,34 +62,22 @@ Game::Game(const Game &otherGame) :
  * \return A pointer to the variable to the left of the operator
  */
 Game& Game::operator=(const Game& otherGame) {
-    gameId = otherGame.gameId;
+    id = otherGame.id;
+    name = otherGame.name;
     platId = otherGame.platId;
     servId = otherGame.servId;
     devId = otherGame.devId;
     pubId = otherGame.pubId;
     coverId = otherGame.coverId;
     coverImage = otherGame.coverImage;
-    name = otherGame.name;
     exclusive = otherGame.exclusive;
     expansion = otherGame.expansion;
     releaseDate = otherGame.releaseDate;
     physical = otherGame.physical;
     edition = otherGame.edition;
     dateAdded = otherGame.dateAdded;
-    platName = otherGame.platName;
-    servName = otherGame.servName;
-    devName = otherGame.devName;
-    pubName = otherGame.pubName;
 
     return *this;
-}
-
-/*!
- * \brief Assigns a new game ID.
- * \param gid = The new game ID
- */
-void Game::setGameId(const int &gid) {
-    gameId = gid;
 }
 
 /*!
@@ -151,14 +129,6 @@ void Game::setCoverImage(const QByteArray &cover) {
 }
 
 /*!
- * \brief Assigns a new name for the game.
- * \param n = The new game name
- */
-void Game::setName(const QString &n) {
-    name = n;
-}
-
-/*!
  * \brief Assigns a new value to the exclusive property.
  * \param excl = The new value
  */
@@ -204,46 +174,6 @@ void Game::setEdition(const QString &ed) {
  */
 void Game::setDateAdded(const QDate &added) {
     dateAdded = added;
-}
-
-/*!
- * \brief Assigns a new platform name for the game.
- * \param pName = The new platform name
- */
-void Game::setPlatName(const QString &pName) {
-    platName = pName;
-}
-
-/*!
- * \brief Assigns a new service name for the game.
- * \param sName = The new service name
- */
-void Game::setServName(const QString &sName) {
-    servName = sName;
-}
-
-/*!
- * \brief Assigns a new developer name for the game.
- * \param dev = The new developer name
- */
-void Game::setDevName(const QString &dev) {
-    devName = dev;
-}
-
-/*!
- * \brief Assigns a new publisher name for the game.
- * \param pub = The new publisher name
- */
-void Game::setPubName(const QString &pub) {
-    pubName = pub;
-}
-
-/*!
- * \brief Retrieves the game ID.
- * \return The game ID
- */
-int Game::getGameId() const {
-    return gameId;
 }
 
 /*!
@@ -295,14 +225,6 @@ QByteArray Game::getCoverImage() const {
 }
 
 /*!
- * \brief Retrieves the game name.
- * \return The game name
- */
-QString Game::getName() const {
-    return name;
-}
-
-/*!
  * \brief Retrieves the game's exclusivity status.
  * \return A true/false value
  */
@@ -351,33 +273,10 @@ QDate Game::getDateAdded() const {
 }
 
 /*!
- * \brief Retrieves the platform name.
- * \return The platform name
+ * \brief Returns the type of entry the calling object is.
+ * \return  An EntryTypes enum of Game
+ * \note The returning value will always be the Game enum.
  */
-QString Game::getPlatName() const {
-    return platName;
-}
-
-/*!
- * \brief Retrieves the service name.
- * \return The service name
- */
-QString Game::getServName() const {
-    return servName;
-}
-
-/*!
- * \brief Retrieves the developer name.
- * \return The developer name
- */
-QString Game::getDevName() const {
-    return devName;
-}
-
-/*!
- * \brief Retrieves the publisher name.
- * \return The publisher name
- */
-QString Game::getPubName() const {
-    return pubName;
+EntryTypes Game::getEntryType() const {
+    return EntryTypes::Game;
 }
