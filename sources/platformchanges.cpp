@@ -5,8 +5,7 @@
  * \param pid = The Platform ID
  */
 PlatformChanges::PlatformChanges(const int &pid) :
-    platId(pid),
-    iterator(0)
+    EntryChanges(pid)
 {
 }
 
@@ -15,9 +14,8 @@ PlatformChanges::PlatformChanges(const int &pid) :
  * \param plat = The Platform that should be changed
  * \note This is the same as a default constructor, except it uses the ID of the given Platform object.
  */
-PlatformChanges::PlatformChanges(const Platform &plat) :
-    platId(plat.getPlatId()),
-    iterator(0)
+PlatformChanges::PlatformChanges(Platform &plat) :
+    EntryChanges(&plat)
 {
 }
 
@@ -25,10 +23,8 @@ PlatformChanges::PlatformChanges(const Platform &plat) :
  * \brief The copy constructor for PlatformChanges objects.
  * \param otherChanges = The other PlatformChanges object from where the values will be copied.
  */
-PlatformChanges::PlatformChanges(const PlatformChanges &otherChanges) :
-    platId(otherChanges.platId),
-    iterator(otherChanges.iterator),
-    changes(otherChanges.changes)
+PlatformChanges::PlatformChanges(PlatformChanges &otherChanges) :
+    EntryChanges(&otherChanges)
 {
 }
 
@@ -38,7 +34,7 @@ PlatformChanges::PlatformChanges(const PlatformChanges &otherChanges) :
  * \return A pointer to the PlatformChanges object on the left of the assignment operator.
  */
 PlatformChanges& PlatformChanges::operator=(const PlatformChanges &otherChanges) {
-    platId = otherChanges.platId;
+    currentId = otherChanges.currentId;
     iterator = otherChanges.iterator;
     changes = otherChanges.changes;
 
@@ -46,42 +42,11 @@ PlatformChanges& PlatformChanges::operator=(const PlatformChanges &otherChanges)
 }
 
 /*!
- * \brief Returns the amount of changes to the Platform.
- * \return An integer with the size of the changes data stucture.
- */
-int PlatformChanges::size() const {
-    return changes.size();
-}
-
-/*!
- * \brief Returns the change currently pointed to, then moves up by one spot.
- * \return A QPair in the form of <(Value type changed), (New Value)>.
- */
-QPair<QString, QVariant> PlatformChanges::next() {
-    return changes.value(iterator++);
-}
-
-/*!
- * \brief Are there more changes left in the list?
- * \return A boolean value.
- */
-bool PlatformChanges::hasNext() const {
-    return (iterator < size() ? true:false);
-}
-
-/*!
- * \brief Moves the iterator back to the start.
- */
-void PlatformChanges::toStart() {
-    iterator = 0;
-}
-
-/*!
  * \brief Adds a new platform ID to the list of changes.
- * \param pid = The new platform ID
+ * \param newId = The new platform ID
  */
-void PlatformChanges::setNewPlatId(const int &pid) {
-    changes[changes.size()] = qMakePair(QString("ID"), pid);
+void PlatformChanges::setNewId(const int &newId) {
+    changes[changes.size()] = qMakePair(ChangeTypes::Platform_ID, newId);
 }
 
 /*!
@@ -89,7 +54,7 @@ void PlatformChanges::setNewPlatId(const int &pid) {
  * \param n = The new platform name
  */
 void PlatformChanges::setNewName(const QString& n) {
-    changes[changes.size()] = qMakePair(QString("Name"), n);
+    changes[changes.size()] = qMakePair(ChangeTypes::Name, n);
 }
 
 /*!
@@ -97,7 +62,7 @@ void PlatformChanges::setNewName(const QString& n) {
  * \param gen = The new console generation
  */
 void PlatformChanges::setNewGeneration(const int& gen) {
-    changes[changes.size()] = qMakePair(QString("Generation"), gen);
+    changes[changes.size()] = qMakePair(ChangeTypes::Generation, gen);
 }
 
 /*!
@@ -105,25 +70,7 @@ void PlatformChanges::setNewGeneration(const int& gen) {
  * \param rel = The new release date
  */
 void PlatformChanges::setNewReleaseDate(const QDate& rel) {
-    changes[changes.size()] = qMakePair(QString("Release Date"), rel);
-}
-
-/*!
- * \brief Returns the current platform ID.
- * \return An integer of the ID.
- * \note This is the platform ID to which this Changes object refers to, to be changed.
- */
-int PlatformChanges::getCurrentPlatId() const {
-    return platId;
-}
-
-/*!
- * \brief Returns a data structure with all platform changes.
- * \return  A QHash with the form of <(Change ID), <(Change type, Change value)> >
- * \note A case where only the name of the platform was changed: <0, <"Name", "Playstation 3">>
- */
-QHash<int, QPair<QString, QVariant> > PlatformChanges::getAllChanges() const {
-    return changes;
+    changes[changes.size()] = qMakePair(ChangeTypes::Release_Date, rel);
 }
 
 /*!
@@ -134,10 +81,10 @@ QHash<int, QPair<QString, QVariant> > PlatformChanges::getAllChanges() const {
  * \note The first parameter is always regarded as the main object that should be changed.
  */
 PlatformChanges PlatformChanges::changesFrom(const Platform &platA, const Platform &platB) {
-    PlatformChanges changes(platA.getPlatId());
+    PlatformChanges changes(platA.getId());
 
-    if (platA.getPlatId() != platB.getPlatId())
-        changes.setNewPlatId(platB.getPlatId());
+    if (platA.getId() != platB.getId())
+        changes.setNewId(platB.getId());
 
     if (platA.getName() != platB.getName())
         changes.setNewName(platB.getName());

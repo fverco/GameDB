@@ -7,8 +7,7 @@
  */
 Platform::Platform(const int &pid,
                    const QString &n) :
-    platId(pid),
-    name(n),
+    Entry(pid, n),
     generation(-1),
     releaseDate(QDate(2000, 1, 1))
 {
@@ -19,8 +18,7 @@ Platform::Platform(const int &pid,
  * \param otherPlat = The platform object from which the values will be copied
  */
 Platform::Platform(const Platform& otherPlat) :
-    platId(otherPlat.platId),
-    name(otherPlat.name),
+    Entry(otherPlat.id, otherPlat.name),
     generation(otherPlat.generation),
     releaseDate(otherPlat.releaseDate)
 {
@@ -32,28 +30,12 @@ Platform::Platform(const Platform& otherPlat) :
  * \return A pointer to the variable to the left of the operator
  */
 Platform& Platform::operator=(const Platform& otherPlat) {
-    platId = otherPlat.platId;
+    id = otherPlat.id;
     name = otherPlat.name;
     generation = otherPlat.generation;
     releaseDate = otherPlat.releaseDate;
 
     return *this;
-}
-
-/*!
- * \brief Assigns a new platform ID.
- * \param pid = The new platform ID
- */
-void Platform::setPlatId(const int &pid) {
-    platId = pid;
-}
-
-/*!
- * \brief Assigns a new platform name.
- * \param n = The new platform name
- */
-void Platform::setName(const QString& n) {
-    name = n;
 }
 
 /*!
@@ -73,22 +55,6 @@ void Platform::setReleaseDate(const QDate& rel) {
 }
 
 /*!
- * \brief Returns the platform ID.
- * \return An integer with the platform ID
- */
-int Platform::getPlatId() const {
-    return platId;
-}
-
-/*!
- * \brief Returns the platform name.
- * \return A QString with the platform name
- */
-QString Platform::getName() const {
-    return name;
-}
-
-/*!
  * \brief Returns the platform's console generation.
  * \return An integer with the console generation number
  */
@@ -102,4 +68,13 @@ int Platform::getGeneration() const {
  */
 QDate Platform::getReleaseDate() const {
     return releaseDate;
+}
+
+/*!
+ * \brief Returns the type of entry the calling object is.
+ * \return  An EntryTypes enum of Platform
+ * \note The returning value will always be the Platform enum.
+ */
+EntryTypes Platform::getEntryType() const {
+    return EntryTypes::Platform;
 }
