@@ -43,7 +43,7 @@ ServiceChanges& ServiceChanges::operator=(const ServiceChanges &otherChanges) {
 
 /*!
  * \brief Adds a new service ID to the list of changes.
- * \param sid = The new service ID
+ * \param newId = The new service ID
  */
 void ServiceChanges::setNewId(const int &newId) {
     changes[changes.size()] = qMakePair(ChangeTypes::Service_ID, newId);

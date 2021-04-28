@@ -75,7 +75,7 @@ GameChanges& GameChanges::operator=(const GameChanges &otherChanges) {
 
 /*!
  * \brief Adds a new Game ID to the list of changes.
- * \param gid = The new Game ID
+ * \param newId = The new Game ID
  * \note The previous Game ID is still kept for reference.
  */
 void GameChanges::setNewId(const int& newId) {
