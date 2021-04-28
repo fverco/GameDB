@@ -1,7 +1,7 @@
 #include "headers/servicechanges.h"
 
 /*!
- * \brief Create a ServiceChanges objest with default values.
+ * \brief Create a ServiceChanges object with default values.
  * \param sid = The service ID
  */
 ServiceChanges::ServiceChanges(const int &sid) :
