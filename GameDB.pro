@@ -21,6 +21,7 @@ SOURCES += \
         sources/platform.cpp \
         sources/platformchanges.cpp \
         sources/publisher.cpp \
+        sources/publisherchanges.cpp \
         sources/service.cpp \
         sources/servicechanges.cpp
 
@@ -54,5 +55,6 @@ HEADERS += \
     headers/platform.h \
     headers/platformchanges.h \
     headers/publisher.h \
+    headers/publisherchanges.h \
     headers/service.h \
     headers/servicechanges.h
