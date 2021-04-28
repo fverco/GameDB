@@ -20,6 +20,7 @@ SOURCES += \
         sources/main.cpp \
         sources/platform.cpp \
         sources/platformchanges.cpp \
+        sources/publisher.cpp \
         sources/service.cpp \
         sources/servicechanges.cpp
 
@@ -52,5 +53,6 @@ HEADERS += \
     headers/infodatabase.h \
     headers/platform.h \
     headers/platformchanges.h \
+    headers/publisher.h \
     headers/service.h \
     headers/servicechanges.h
