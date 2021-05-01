@@ -32,25 +32,18 @@ ApplicationWindow {
 
     Drawer {
         id: drawer
-        width: window.width * 0.66
+        width: window.width * 0.10
         height: window.height
 
         Column {
             anchors.fill: parent
 
             ItemDelegate {
-                text: qsTr("Page 1")
+                text: qsTr("Add Game")
                 width: parent.width
                 onClicked: {
-                    stackView.push("Page1Form.ui.qml")
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Page 2")
-                width: parent.width
-                onClicked: {
-                    stackView.push("Page2Form.ui.qml")
+                    stackView.push("./forms/AddGameForm.ui.qml")
+                    
                     drawer.close()
                 }
             }
@@ -59,7 +52,7 @@ ApplicationWindow {
 
     StackView {
         id: stackView
-        initialItem: "HomeForm.ui.qml"
+        initialItem: "./forms/LibraryForm.ui.qml"
         anchors.fill: parent
     }
 }
