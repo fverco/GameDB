@@ -2,7 +2,7 @@
  *
  *  \section build-info Build Information
  *
- *  This application uses Qt 6.0.3 and uses Qt Quick.\n
+ *  This application uses Qt 6.0.3 and uses Qt Quick 2.0.\n
  *  Compiled with MinGW 64-bit and uses SQLite as its database.\n
  *  Documentation is done with a combination of Doxygen and Graphviz.\n
  *
@@ -17,6 +17,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QtDebug>
 
 /*!
  * \brief Start the application.
