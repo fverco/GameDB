@@ -3,8 +3,6 @@ import QtQuick.Controls 2.15
 import "../components"
 
 Page {
-    anchors.fill: parent
-
     title: qsTr("Library")
 
     Grid {
@@ -31,3 +29,9 @@ Page {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

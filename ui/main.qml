@@ -1,12 +1,31 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import "./forms"
+import "./components"
 
 ApplicationWindow {
     id: window
-    width: 640
-    height: 480
+    width: 800
+    height: 600
+    minimumWidth: 800
+    minimumHeight: 600
     visible: true
     title: qsTr("GameDB")
+
+    property AddGame addGameInstance
+
+    function openAddGameWindow() {
+        if (!addGameInstance) {
+            var addGameComponent = Qt.createComponent("./forms/AddGame.qml");
+            addGameInstance = addGameComponent.createObject(window);
+            addGameInstance.showNormal();
+        } else {
+            if (addGameInstance.visibility === 3 || addGameInstance.visibility === 0) {
+                addGameInstance.showNormal();
+            }
+            addGameInstance.requestActivate();
+        }
+    }
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
@@ -42,10 +61,12 @@ ApplicationWindow {
                 text: qsTr("Add Game")
                 width: parent.width
                 onClicked: {
-                    stackView.push("./forms/AddGameForm.ui.qml")
-                    
-                    drawer.close()
+//                    stackView.push("./forms/AddGameForm.ui.qml") // Trying something else.
+                    drawer.close();
+                    openAddGameWindow();
                 }
+
+
             }
         }
     }
