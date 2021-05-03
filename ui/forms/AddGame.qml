@@ -3,12 +3,13 @@ import QtQuick.Controls 2.14
 
 ApplicationWindow {
     width: 400
-    height: 500
+    height: 600
     minimumWidth: width
     minimumHeight: height
     maximumWidth: width
     maximumHeight: height
     title: "Add Game"
+    id: addGameWindow
 
     Column {
         id: column
@@ -18,7 +19,7 @@ ApplicationWindow {
 
         // Every visual value in this nameRow is copied to the other rows.
         Row {
-            height: parent.height / 10
+            height: parent.height / 12
             width: parent.width - 10
             spacing: 10
             id: nameRow
@@ -170,7 +171,8 @@ ApplicationWindow {
             }
 
             TextField {
-
+                placeholderText: "YYYY"
+                onTextChanged: if (length > 4) remove(4, length);
             }
 
             Label {
@@ -178,7 +180,8 @@ ApplicationWindow {
             }
 
             TextField {
-
+                placeholderText: "MM"
+                onTextChanged: if (length > 2) remove(2, length);
             }
 
             Label {
@@ -186,7 +189,45 @@ ApplicationWindow {
             }
 
             TextField {
+                placeholderText: "DD"
+                onTextChanged: if (length > 2) remove(2, length);
+            }
+        }
 
+        Row {
+            height: nameRow.height
+            width: nameRow.width
+            spacing: nameRow.spacing
+
+            Label {
+                text: "Cover Image: "
+            }
+
+            TextField {
+                width: nameLbl.width * 1.8
+            }
+
+            Button {
+                id: btnImg
+                text: "Add Image"
+            }
+        }
+
+        Row {
+            height: nameRow.height
+            layoutDirection: Qt.RightToLeft
+            width: nameRow.width - 10
+            spacing: nameRow.spacing
+
+            Button {
+                id: btnCancel
+                text: "Cancel"
+                onClicked: addGameWindow.close();
+            }
+
+            Button {
+                id: btnAdd
+                text: "Add"
             }
         }
     }
