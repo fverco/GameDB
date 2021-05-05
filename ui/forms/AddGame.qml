@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.14
+import Qt.labs.platform 1.1
 
 ApplicationWindow {
     width: 400
@@ -33,6 +34,7 @@ ApplicationWindow {
             TextField {
                 width: parent.width * 3/4 - 20
                 id: nameField
+                selectByMouse: true
             }
         }
 
@@ -113,6 +115,7 @@ ApplicationWindow {
             TextField {
                 width: nameField.width
                 id: editionField
+                selectByMouse: true
             }
         }
 
@@ -171,8 +174,12 @@ ApplicationWindow {
             }
 
             TextField {
+                id: yearField
                 placeholderText: "YYYY"
+                width: 60
                 onTextChanged: if (length > 4) remove(4, length);
+                selectByMouse: true
+                validator: IntValidator {bottom: 1900; top: 2100}
             }
 
             Label {
@@ -180,8 +187,15 @@ ApplicationWindow {
             }
 
             TextField {
+                id: monthField
                 placeholderText: "MM"
+                width: 50
                 onTextChanged: if (length > 2) remove(2, length);
+                selectByMouse: true
+                validator: IntValidator {bottom: 1; top: 12}
+                Keys.onPressed: if (event.key === Qt.Key_Backspace && text.length === 0) {
+                                    yearField.focus = true;
+                                }
             }
 
             Label {
@@ -189,8 +203,15 @@ ApplicationWindow {
             }
 
             TextField {
+                id: dayField
                 placeholderText: "DD"
+                width: 50
                 onTextChanged: if (length > 2) remove(2, length);
+                selectByMouse: true
+                validator: IntValidator {bottom: 1; top: 31}
+                Keys.onPressed: if (event.key === Qt.Key_Backspace && text.length === 0) {
+                                    monthField.focus = true;
+                                }
             }
         }
 
@@ -204,12 +225,16 @@ ApplicationWindow {
             }
 
             TextField {
+                id: coverField
                 width: nameLbl.width * 1.8
+                selectByMouse: true
+                readOnly: true
             }
 
             Button {
                 id: btnImg
                 text: "Add Image"
+                onClicked: fileDialog.open();
             }
         }
 
@@ -230,5 +255,14 @@ ApplicationWindow {
                 text: "Add"
             }
         }
+    }
+
+    FileDialog {
+        id: fileDialog
+        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
+        nameFilters: ["Image files (*.jpeg *.jpg *.png *.gif *.bmp)"]
+        fileMode: FileDialog.OpenFile
+        options: FileDialog.ReadOnly
+        onAccepted: coverField.text = file;
     }
 }
