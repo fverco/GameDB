@@ -18,7 +18,8 @@ ApplicationWindow {
         leftPadding: 10
         topPadding: 10
 
-        // Every visual value in this nameRow is copied to the other rows.
+        // Name row.
+        // Note: Every visual value in this nameRow is copied to the other rows.
         Row {
             height: parent.height / 12
             width: parent.width - 10
@@ -38,6 +39,7 @@ ApplicationWindow {
             }
         }
 
+        // Platform row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -54,6 +56,7 @@ ApplicationWindow {
             }
         }
 
+        // Service row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -70,6 +73,7 @@ ApplicationWindow {
             }
         }
 
+        // Developer row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -86,6 +90,7 @@ ApplicationWindow {
             }
         }
 
+        // Publisher row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -102,6 +107,7 @@ ApplicationWindow {
             }
         }
 
+        // Edition row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -119,6 +125,7 @@ ApplicationWindow {
             }
         }
 
+        // Exclusive row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -134,6 +141,7 @@ ApplicationWindow {
             }
         }
 
+        // Expansion row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -149,6 +157,7 @@ ApplicationWindow {
             }
         }
 
+        // Physical copy row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -164,12 +173,14 @@ ApplicationWindow {
             }
         }
 
+        // Release date row.
         Row {
             height: nameRow.height
             width: nameRow.width
             spacing: nameRow.spacing
 
             Label {
+                width: nameLbl.width
                 text: "Release Date: "
             }
 
@@ -215,6 +226,7 @@ ApplicationWindow {
             }
         }
 
+        // Cover image row.
         Row {
             height: nameRow.height
             width: nameRow.width
@@ -238,6 +250,7 @@ ApplicationWindow {
             }
         }
 
+        // Add/cancel row.
         Row {
             height: nameRow.height
             layoutDirection: Qt.RightToLeft
@@ -266,3 +279,9 @@ ApplicationWindow {
         onAccepted: coverField.text = file;
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
