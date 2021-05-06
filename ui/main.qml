@@ -12,32 +12,32 @@ ApplicationWindow {
     visible: true
     title: qsTr("GameDB")
 
-    property AddGame addGameInstance
-    property AddPlatform addPlatformInstance
+    property GameForm gameFormInstance
+    property PlatformForm platformFormInstance
 
-    function openAddGameWindow() {
-        if (!addGameInstance) {
-            var addGameComponent = Qt.createComponent("./forms/AddGame.qml");
-            addGameInstance = addGameComponent.createObject(window);
-            addGameInstance.showNormal();
+    function openGameFormWindow() {
+        if (!gameFormInstance) {
+            var gameFormComponent = Qt.createComponent("./forms/GameForm.qml");
+            gameFormInstance = gameFormComponent.createObject(window);
+            gameFormInstance.showNormal();
         } else {
-            if (addGameInstance.visibility === 3 || addGameInstance.visibility === 0) {
-                addGameInstance.showNormal();
+            if (gameFormInstance.visibility === 3 || gameFormInstance.visibility === 0) {
+                gameFormInstance.showNormal();
             }
-            addGameInstance.requestActivate();
+            gameFormInstance.requestActivate();
         }
     }
 
-    function openAddPlatformWindow() {
-        if (!addPlatformInstance) {
-            var addPlatformComponent = Qt.createComponent("./forms/AddPlatform.qml");
-            addPlatformInstance = addPlatformComponent.createObject(window);
-            addPlatformInstance.showNormal();
+    function openPlatformFormWindow() {
+        if (!platformFormInstance) {
+            var platformFormComponent = Qt.createComponent("./forms/PlatformForm.qml");
+            platformFormInstance = platformFormComponent.createObject(window);
+            platformFormInstance.showNormal();
         } else {
-            if (addPlatformInstance.visibility === 3 || addPlatformInstance.visibility === 0) {
-                addPlatformInstance.showNormal();
+            if (platformFormInstance.visibility === 3 || platformFormInstance.visibility === 0) {
+                platformFormInstance.showNormal();
             }
-            addPlatformInstance.requestActivate();
+            platformFormInstance.requestActivate();
         }
     }
 
@@ -76,7 +76,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    openAddGameWindow();
+                    openGameFormWindow();
                 }
             }
 
@@ -85,7 +85,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    openAddPlatformWindow();
+                    openPlatformFormWindow();
                 }
             }
         }

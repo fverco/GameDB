@@ -5,7 +5,8 @@
         <file>ui/main.qml</file>
         <file>ui/components/GameCase.qml</file>
         <file>ui/components/GameCaseForm.ui.qml</file>
-        <file>ui/forms/AddGame.qml</file>
-        <file>ui/forms/AddPlatform.qml</file>
+        <file>ui/forms/GameForm.qml</file>
+        <file>ui/forms/PlatformForm.qml</file>
+        <file>ui/forms/SimpleEntryForm.qml</file>
     </qresource>
 </RCC>
