@@ -13,6 +13,7 @@ ApplicationWindow {
     title: qsTr("GameDB")
 
     property AddGame addGameInstance
+    property AddPlatform addPlatformInstance
 
     function openAddGameWindow() {
         if (!addGameInstance) {
@@ -24,6 +25,19 @@ ApplicationWindow {
                 addGameInstance.showNormal();
             }
             addGameInstance.requestActivate();
+        }
+    }
+
+    function openAddPlatformWindow() {
+        if (!addPlatformInstance) {
+            var addPlatformComponent = Qt.createComponent("./forms/AddPlatform.qml");
+            addPlatformInstance = addPlatformComponent.createObject(window);
+            addPlatformInstance.showNormal();
+        } else {
+            if (addPlatformInstance.visibility === 3 || addPlatformInstance.visibility === 0) {
+                addPlatformInstance.showNormal();
+            }
+            addPlatformInstance.requestActivate();
         }
     }
 
@@ -61,12 +75,18 @@ ApplicationWindow {
                 text: qsTr("Add Game")
                 width: parent.width
                 onClicked: {
-//                    stackView.push("./forms/AddGameForm.ui.qml") // Trying something else.
                     drawer.close();
                     openAddGameWindow();
                 }
+            }
 
-
+            ItemDelegate {
+                text: qsTr("Add Platform")
+                width: parent.width
+                onClicked: {
+                    drawer.close();
+                    openAddPlatformWindow();
+                }
             }
         }
     }
