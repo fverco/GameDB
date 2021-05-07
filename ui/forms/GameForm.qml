@@ -2,13 +2,14 @@ import QtQuick 2.15
 import QtQuick.Controls 2.14
 import Qt.labs.platform 1.1
 
-ApplicationWindow {
+Window {
     width: 400
     height: 600
     minimumWidth: width
     minimumHeight: height
     maximumWidth: width
     maximumHeight: height
+    color: "black"
     title: "Add Game"
     id: addGameWindow
 

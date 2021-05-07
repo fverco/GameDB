@@ -1,13 +1,14 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.14
 
-ApplicationWindow {
+Window {
     width: 450
     height: 200
     minimumWidth: width
     minimumHeight: height
     maximumWidth: width
     maximumHeight: height
+    color: "black"
     title: "Add Platform"
     id: addPlatformWindow
 
