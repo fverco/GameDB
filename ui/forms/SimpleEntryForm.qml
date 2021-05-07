@@ -9,8 +9,15 @@ Window {
     maximumWidth: width
     maximumHeight: height
     color: "black"
-    title: "Add Entry"
+    title: if (entryType) {
+                "Add " + entryType;
+           } else {
+                "Add Entry";
+           }
+
     id: simpleEntryForm
+
+    property string entryType;
 
     Column {
         id: column

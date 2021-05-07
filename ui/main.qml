@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import "./forms"
 import "./components"
+import "./scripts/MainLogic.js" as Logic
 
 ApplicationWindow {
     id: window
@@ -14,32 +15,7 @@ ApplicationWindow {
 
     property GameForm gameFormInstance
     property PlatformForm platformFormInstance
-
-    function openGameFormWindow() {
-        if (!gameFormInstance) {
-            var gameFormComponent = Qt.createComponent("./forms/GameForm.qml");
-            gameFormInstance = gameFormComponent.createObject(window);
-            gameFormInstance.showNormal();
-        } else {
-            if (gameFormInstance.visibility === 3 || gameFormInstance.visibility === 0) {
-                gameFormInstance.showNormal();
-            }
-            gameFormInstance.requestActivate();
-        }
-    }
-
-    function openPlatformFormWindow() {
-        if (!platformFormInstance) {
-            var platformFormComponent = Qt.createComponent("./forms/PlatformForm.qml");
-            platformFormInstance = platformFormComponent.createObject(window);
-            platformFormInstance.showNormal();
-        } else {
-            if (platformFormInstance.visibility === 3 || platformFormInstance.visibility === 0) {
-                platformFormInstance.showNormal();
-            }
-            platformFormInstance.requestActivate();
-        }
-    }
+    property SimpleEntryForm simpleEntryFormInstance
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
@@ -76,7 +52,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    openGameFormWindow();
+                    Logic.openWindow(Logic.WindowTypes.GameWindow);
                 }
             }
 
@@ -85,7 +61,34 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    openPlatformFormWindow();
+                    Logic.openWindow(Logic.WindowTypes.PlatformWindow);
+                }
+            }
+
+            ItemDelegate {
+                text: qsTr("Add Service")
+                width: parent.width
+                onClicked: {
+                    drawer.close();
+                    Logic.openWindow(Logic.WindowTypes.ServiceWindow);
+                }
+            }
+
+            ItemDelegate {
+                text: qsTr("Add Developer")
+                width: parent.width
+                onClicked: {
+                    drawer.close();
+                    Logic.openWindow(Logic.WindowTypes.DeveloperWindow);
+                }
+            }
+
+            ItemDelegate {
+                text: qsTr("Add Publisher")
+                width: parent.width
+                onClicked: {
+                    drawer.close();
+                    Logic.openWindow(Logic.WindowTypes.PublisherWindow);
                 }
             }
         }

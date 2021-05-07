@@ -8,5 +8,6 @@
         <file>ui/forms/GameForm.qml</file>
         <file>ui/forms/PlatformForm.qml</file>
         <file>ui/forms/SimpleEntryForm.qml</file>
+        <file>ui/scripts/MainLogic.js</file>
     </qresource>
 </RCC>
