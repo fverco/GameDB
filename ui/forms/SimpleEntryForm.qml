@@ -1,5 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.14
+import Qt.labs.platform 1.1
+import "../scripts/SimpleEntryLogic.js" as Logic
+import "../scripts/WindowTypes.js" as Types
 
 Window {
     width: 450
@@ -9,15 +12,15 @@ Window {
     maximumWidth: width
     maximumHeight: height
     color: "black"
-    title: if (entryType) {
-                "Add " + entryType;
+    title: if (entryType > -1 && entryType < Types.count()) {
+                "Add " + Types.getType(entryType);
            } else {
                 "Add Entry";
            }
 
     id: simpleEntryForm
 
-    property string entryType;
+    property int entryType;
 
     Column {
         id: column
@@ -62,8 +65,18 @@ Window {
             Button {
                 id: btnAdd
                 text: "Add"
+                onClicked: Logic.addNewEntry();
             }
         }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        buttons: MessageDialog.Ok
+        text: "NULL"
+        onAccepted: if (closeWindow) simpleEntryForm.close();
+
+        property bool closeWindow: false;
     }
 }
 
