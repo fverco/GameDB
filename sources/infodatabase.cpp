@@ -127,6 +127,72 @@ bool InfoDatabase::createDatabase(const QString &dir) {
 }
 
 /*!
+ * \brief Adds a new service entry to the database.
+ * \param serv = The new service entry
+ * \return A bool value that's true if it was successful.
+ */
+bool InfoDatabase::addService(const Service &serv) {
+    openDb();
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("INSERT INTO Service (Name)"
+                    "VALUES (?)");
+    qryInfo.addBindValue(serv.getName());
+
+    if (qryInfo.exec()) {
+        closeDb();
+        return true;
+    } else {
+        closeDb();
+        return false;
+    }
+}
+
+/*!
+ * \brief Adds a new developer entry to the database.
+ * \param dev = The new developer entry
+ * \return A bool value that's true if it was successful.
+ */
+bool InfoDatabase::addDeveloper(const Developer &dev) {
+    openDb();
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("INSERT INTO Developer (Name)"
+                    "VALUES (?)");
+    qryInfo.addBindValue(dev.getName());
+
+    if (qryInfo.exec()) {
+        closeDb();
+        return true;
+    } else {
+        closeDb();
+        return false;
+    }
+}
+
+/*!
+ * \brief Adds a new publisher entry to the database.
+ * \param pub = The new publisher entry
+ * \return A bool value that's true if it was successful.
+ */
+bool InfoDatabase::addPublisher(const Publisher &pub) {
+    openDb();
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("INSERT INTO Publisher (Name)"
+                    "VALUES (?)");
+    qryInfo.addBindValue(pub.getName());
+
+    if (qryInfo.exec()) {
+        closeDb();
+        return true;
+    } else {
+        closeDb();
+        return false;
+    }
+}
+
+/*!
  * \brief Opens a connection to the database file, if it's not open already.
  */
 void InfoDatabase::openDb() {
