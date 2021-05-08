@@ -1,5 +1,7 @@
 # GameDB
 
+-----------
+
 Keep record of all your hundreds of games across every possible platform.
 
 ## Build information
@@ -11,3 +13,6 @@ Keep record of all your hundreds of games across every possible platform.
 ## Documentation
 
 I am also using Doxygen and Graphviz for documentation, so there will be quite a lot of comments in the code.
+
+---------------------
+
