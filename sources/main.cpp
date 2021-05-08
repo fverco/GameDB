@@ -2,7 +2,7 @@
  *
  *  \section build-info Build Information
  *
- *  This application uses Qt 6.0.4 and uses Qt Quick 2.0.\n
+ *  This application uses Qt 6.1.0 and uses Qt Quick 2.0.\n
  *  Compiled with MinGW 64-bit and uses SQLite as its database.\n
  *  Documentation is done with a combination of Doxygen and Graphviz.\n
  *

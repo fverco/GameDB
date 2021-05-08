@@ -6,7 +6,7 @@ Keep record of all your hundreds of games across every possible platform.
 
 |Framework|Compiler|DBMS
 |---|---|---|
-|Qt 6.0.4|MinGW 64-bit|SQLite|
+|Qt 6.1.0|MinGW 64-bit|SQLite|
 
 ## Documentation
 
