@@ -1,48 +1,48 @@
-const WindowTypes = Object.freeze({
-                                      GameWindow: 0,
-                                      PlatformWindow: 1,
-                                      ServiceWindow: 2,
-                                      DeveloperWindow: 3,
-                                      PublisherWindow: 4
-                                  });
+/*
+
+IMPORTANT:
+This script requires the WindowTypes.js script to be loaded as "Types".
+
+*/
 
 // Opens the type of window that you request.
 // Note: It will never allow multiple windows to be open simultaneously.
 function openWindow(windowType) {
+
     if (!detectOpenWindows()) {
 
         switch(windowType) {
 
-        case WindowTypes.GameWindow:
+        case Types.WindowTypes.GameWindow.value:
             var gameFormComponent = Qt.createComponent("../forms/GameForm.qml");
             gameFormInstance = gameFormComponent.createObject(window);
             gameFormInstance.showNormal();
             break;
 
-        case WindowTypes.PlatformWindow:
+        case Types.WindowTypes.PlatformWindow.value:
             var platformFormComponent = Qt.createComponent("../forms/PlatformForm.qml");
             platformFormInstance = platformFormComponent.createObject(window);
             platformFormInstance.showNormal();
             break;
 
-        case WindowTypes.ServiceWindow:
+        case Types.WindowTypes.ServiceWindow.value:
             var serviceFormComponent = Qt.createComponent("../forms/SimpleEntryForm.qml");
             simpleEntryFormInstance = serviceFormComponent.createObject(window);
-            simpleEntryFormInstance.entryType = "Service";
+            simpleEntryFormInstance.entryType = Types.WindowTypes.ServiceWindow.value;
             simpleEntryFormInstance.showNormal();
             break;
 
-        case WindowTypes.DeveloperWindow:
+        case Types.WindowTypes.DeveloperWindow.value:
             var developerFormComponent = Qt.createComponent("../forms/SimpleEntryForm.qml");
             simpleEntryFormInstance = developerFormComponent.createObject(window);
-            simpleEntryFormInstance.entryType = "Developer";
+            simpleEntryFormInstance.entryType = Types.WindowTypes.DeveloperWindow.value;
             simpleEntryFormInstance.showNormal();
             break;
 
-        case WindowTypes.PublisherWindow:
+        case Types.WindowTypes.PublisherWindow.value:
             var publisherFormComponent = Qt.createComponent("../forms/SimpleEntryForm.qml");
             simpleEntryFormInstance = publisherFormComponent.createObject(window);
-            simpleEntryFormInstance.entryType = "Publisher";
+            simpleEntryFormInstance.entryType = Types.WindowTypes.PublisherWindow.value;
             simpleEntryFormInstance.showNormal();
             break;
 

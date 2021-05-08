@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import "./forms"
 import "./components"
 import "./scripts/MainLogic.js" as Logic
+import "./scripts/WindowTypes.js" as Types
 
 ApplicationWindow {
     id: window
@@ -41,7 +42,7 @@ ApplicationWindow {
 
     Drawer {
         id: drawer
-        width: window.width * 0.10
+        width: 200
         height: window.height
 
         Column {
@@ -52,7 +53,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    Logic.openWindow(Logic.WindowTypes.GameWindow);
+                    Logic.openWindow(Types.WindowTypes.GameWindow.value);
                 }
             }
 
@@ -61,7 +62,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    Logic.openWindow(Logic.WindowTypes.PlatformWindow);
+                    Logic.openWindow(Types.WindowTypes.PlatformWindow.value);
                 }
             }
 
@@ -70,7 +71,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    Logic.openWindow(Logic.WindowTypes.ServiceWindow);
+                    Logic.openWindow(Types.WindowTypes.ServiceWindow.value);
                 }
             }
 
@@ -79,7 +80,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    Logic.openWindow(Logic.WindowTypes.DeveloperWindow);
+                    Logic.openWindow(Types.WindowTypes.DeveloperWindow.value);
                 }
             }
 
@@ -88,7 +89,7 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     drawer.close();
-                    Logic.openWindow(Logic.WindowTypes.PublisherWindow);
+                    Logic.openWindow(Types.WindowTypes.PublisherWindow.value);
                 }
             }
         }
