@@ -14,7 +14,7 @@
 
 #include "headers/gameinterm.h"
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtDebug>
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/ui/main.qml"));
@@ -40,10 +40,11 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    engine.load(url);
 
     GameInterm gameInterm;
     engine.rootContext()->setContextProperty(QStringLiteral("gameInterm"), &gameInterm);
+
+    engine.load(url);
 
     return app.exec();
 }

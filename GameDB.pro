@@ -1,4 +1,4 @@
-QT += quick sql
+QT += quick sql widgets
 
 CONFIG += c++17
 
