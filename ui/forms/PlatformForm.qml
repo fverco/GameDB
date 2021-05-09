@@ -1,5 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.14
+import Qt.labs.platform 1.1
+import "../scripts/PlatformLogic.js" as Logic
 
 Window {
     width: 450
@@ -10,7 +12,7 @@ Window {
     maximumHeight: height
     color: "black"
     title: "Add Platform"
-    id: addPlatformWindow
+    id: platformForm
 
     Column {
         id: column
@@ -51,6 +53,7 @@ Window {
             }
 
             SpinBox {
+                id: genSpin
                 value: 0
             }
 
@@ -123,14 +126,24 @@ Window {
             Button {
                 id: btnCancel
                 text: "Cancel"
-                onClicked: addPlatformWindow.close();
+                onClicked: platformForm.close();
             }
 
             Button {
                 id: btnAdd
                 text: "Add"
+                onClicked: Logic.addNewPlatform();
             }
         }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        buttons: MessageDialog.Ok
+        text: "NULL"
+        onAccepted: if (closeWindow) platformForm.close();
+
+        property bool closeWindow: false;
     }
 }
 

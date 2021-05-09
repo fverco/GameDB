@@ -1,4 +1,5 @@
 #include "headers/gameinterm.h"
+#include "headers/platform.h"
 #include "headers/service.h"
 #include "headers/developer.h"
 #include "headers/publisher.h"
@@ -18,6 +19,20 @@ GameInterm::GameInterm(QObject *parent) :
 
     if (!imageDatabase.createDatabase())
         QGuiApplication::quit();
+}
+
+/*!
+ * \brief Requests the Infodatabase to add the given Platform.
+ * \param name = The name of the platform
+ * \param gen = The console generation of the platform
+ * \param year = The release year of the platform
+ * \param month = The release month of the platform
+ * \param day = The release day of the platform
+ * \return A bool value that's true if the request was successful.
+ */
+bool GameInterm::addPlatform(QString name, int gen, int year, int month, int day) {
+    Platform newPlat(-1, name, gen, QDate(year, month, day));
+    return infoDatabase.addPlatform(newPlat);
 }
 
 /*!

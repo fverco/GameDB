@@ -127,6 +127,30 @@ bool InfoDatabase::createDatabase(const QString &dir) {
 }
 
 /*!
+ * \brief Adds a new platform entry to the database.
+ * \param plat = The new platform entry
+ * \return A bool value that's true if it was successful.
+ */
+bool InfoDatabase::addPlatform(const Platform &plat) {
+    openDb();
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("INSERT INTO Platform (Name, Generation, Release_Date)"
+                    "VALUES (?, ?, ?)");
+    qryInfo.addBindValue(plat.getName());
+    qryInfo.addBindValue(plat.getGeneration());
+    qryInfo.addBindValue(plat.getReleaseDate().startOfDay().toSecsSinceEpoch());
+
+    if (qryInfo.exec()) {
+        closeDb();
+        return true;
+    } else {
+        closeDb();
+        return false;
+    }
+}
+
+/*!
  * \brief Adds a new service entry to the database.
  * \param serv = The new service entry
  * \return A bool value that's true if it was successful.

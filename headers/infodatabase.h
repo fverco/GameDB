@@ -2,6 +2,7 @@
 #define INFODATABASE_H
 
 #include "database.h"
+#include "platform.h"
 #include "service.h"
 #include "developer.h"
 #include "publisher.h"
@@ -20,6 +21,7 @@ class InfoDatabase : public Database
 public:
     explicit InfoDatabase(QObject *parent = nullptr);
     bool createDatabase(const QString& dir = QGuiApplication::applicationDirPath() + "/info.data");
+    bool addPlatform(const Platform &plat);
     bool addService(const Service &serv);
     bool addDeveloper(const Developer &dev);
     bool addPublisher(const Publisher &pub);
