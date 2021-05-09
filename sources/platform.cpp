@@ -14,6 +14,23 @@ Platform::Platform(const int &pid,
 }
 
 /*!
+ * \brief Creates a platform object with the provided values.
+ * \param pid = The platform ID in the database
+ * \param n = The name of the platform
+ * \param gen = The console generation of the platform
+ * \param relDate = The release date of the platform
+ */
+Platform::Platform(const int &pid,
+                   const QString &n,
+                   const int &gen,
+                   const QDate &relDate) :
+    Entry(pid, n),
+    generation(gen),
+    releaseDate(relDate)
+{
+}
+
+/*!
  * \brief The copy constructor for Platform objects.
  * \param otherPlat = The platform object from which the values will be copied
  */

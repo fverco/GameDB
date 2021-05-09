@@ -12,6 +12,7 @@ class Platform : public Entry
 {
 public:
     Platform(const int &pid, const QString &n);
+    Platform(const int &pid, const QString &n, const int &gen, const QDate &relDate);
     Platform(const Platform &otherPlat);
     Platform& operator=(const Platform &otherPlat);
 
