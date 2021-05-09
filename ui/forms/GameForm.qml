@@ -1,8 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.14
 import Qt.labs.platform 1.1
+import "../scripts/GameLogic.js" as Logic
 
 Window {
+    id: gameForm
     width: 400
     height: 600
     minimumWidth: width
@@ -11,7 +13,7 @@ Window {
     maximumHeight: height
     color: "black"
     title: "Add Game"
-    id: gameForm
+    Component.onCompleted: Logic.poplulateComboBoxes()
 
     Column {
         id: column
@@ -52,8 +54,13 @@ Window {
             }
 
             ComboBox {
-                width: nameField.width
                 id: platBox
+                width: nameField.width
+                textRole: "name"
+                valueRole: "id"
+                model: ListModel {
+                            id: platBoxModel
+                       }
             }
         }
 
@@ -69,8 +76,13 @@ Window {
             }
 
             ComboBox {
-                width: nameField.width
                 id: servBox
+                width: nameField.width
+                textRole: "name"
+                valueRole: "id"
+                model: ListModel {
+                            id: servBoxModel
+                       }
             }
         }
 
@@ -86,8 +98,13 @@ Window {
             }
 
             ComboBox {
-                width: nameField.width
                 id: devBox
+                width: nameField.width
+                textRole: "name"
+                valueRole: "id"
+                model: ListModel {
+                            id: devBoxModel
+                       }
             }
         }
 
@@ -103,8 +120,13 @@ Window {
             }
 
             ComboBox {
-                width: nameField.width
                 id: pubBox
+                width: nameField.width
+                textRole: "name"
+                valueRole: "id"
+                model: ListModel {
+                            id: pubBoxModel
+                       }
             }
         }
 
@@ -278,6 +300,15 @@ Window {
         fileMode: FileDialog.OpenFile
         options: FileDialog.ReadOnly
         onAccepted: coverField.text = file;
+    }
+
+    MessageDialog {
+        id: messageDialog
+        buttons: MessageDialog.Ok
+        text: "NULL"
+        onAccepted: if (closeWindow) gameForm.close();
+
+        property bool closeWindow: false;
     }
 }
 

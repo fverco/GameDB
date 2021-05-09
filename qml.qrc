@@ -12,5 +12,6 @@
         <file>ui/scripts/SimpleEntryLogic.js</file>
         <file>ui/scripts/WindowTypes.js</file>
         <file>ui/scripts/PlatformLogic.js</file>
+        <file>ui/scripts/GameLogic.js</file>
     </qresource>
 </RCC>
