@@ -21,6 +21,12 @@ class InfoDatabase : public Database
 public:
     explicit InfoDatabase(QObject *parent = nullptr);
     bool createDatabase(const QString& dir = QGuiApplication::applicationDirPath() + "/info.data");
+
+    QMap<int, QString> getPlatformNames();
+    QMap<int, QString> getServiceNames();
+    QMap<int, QString> getDeveloperNames();
+    QMap<int, QString> getPublisherNames();
+
     bool addPlatform(const Platform &plat);
     bool addService(const Service &serv);
     bool addDeveloper(const Developer &dev);

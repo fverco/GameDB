@@ -127,6 +127,102 @@ bool InfoDatabase::createDatabase(const QString &dir) {
 }
 
 /*!
+ * \brief Returns a list of all platform names.
+ * \return A QMap of the form <ID: int, name: QString>\n If there are no entries or an error occurred, then an empty QMap will be returned.
+ */
+QMap<int, QString> InfoDatabase::getPlatformNames() {
+    openDb();
+
+    QMap<int, QString> platformMap;
+    QSqlQuery infoQry(infoDb);
+
+    infoQry.prepare("SELECT plat_id, name FROM Platform");
+    if (infoQry.exec()) {
+        if (infoQry.next()) {
+            platformMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+            while (infoQry.next())
+                platformMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+        }
+    }
+
+    closeDb();
+
+    return platformMap;
+}
+
+/*!
+ * \brief Returns a list of all service names.
+ * \return A QMap of the form <ID: int, name: QString>\n If there are no entries or an error occurred, then an empty QMap will be returned.
+ */
+QMap<int, QString> InfoDatabase::getServiceNames() {
+    openDb();
+
+    QMap<int, QString> serviceMap;
+    QSqlQuery infoQry(infoDb);
+
+    infoQry.prepare("SELECT serv_id, name FROM Service");
+    if (infoQry.exec()) {
+        if (infoQry.next()) {
+            serviceMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+            while (infoQry.next())
+                serviceMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+        }
+    }
+
+    closeDb();
+
+    return serviceMap;
+}
+
+/*!
+ * \brief Returns a list of all developer names.
+ * \return A QMap of the form <ID: int, name: QString>\n If there are no entries or an error occurred, then an empty QMap will be returned.
+ */
+QMap<int, QString> InfoDatabase::getDeveloperNames() {
+    openDb();
+
+    QMap<int, QString> devMap;
+    QSqlQuery infoQry(infoDb);
+
+    infoQry.prepare("SELECT dev_id, name FROM Developer");
+    if (infoQry.exec()) {
+        if (infoQry.next()) {
+            devMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+            while (infoQry.next())
+                devMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+        }
+    }
+
+    closeDb();
+
+    return devMap;
+}
+
+/*!
+ * \brief Returns a list of all publisher names.
+ * \return A QMap of the form <ID: int, name: QString>\n If there are no entries or an error occurred, then an empty QMap will be returned.
+ */
+QMap<int, QString> InfoDatabase::getPublisherNames() {
+    openDb();
+
+    QMap<int, QString> pubMap;
+    QSqlQuery infoQry(infoDb);
+
+    infoQry.prepare("SELECT pub_id, name FROM Publisher");
+    if (infoQry.exec()) {
+        if (infoQry.next()) {
+            pubMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+            while (infoQry.next())
+                pubMap.insert(infoQry.value(0).toInt(), infoQry.value(1).toString());
+        }
+    }
+
+    closeDb();
+
+    return pubMap;
+}
+
+/*!
  * \brief Adds a new platform entry to the database.
  * \param plat = The new platform entry
  * \return A bool value that's true if it was successful.

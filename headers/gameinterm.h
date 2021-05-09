@@ -14,6 +14,12 @@ class GameInterm : public QObject
     Q_OBJECT
 public:
     explicit GameInterm(QObject *parent = nullptr);
+
+    Q_INVOKABLE QVariantMap getPlatformNames();
+    Q_INVOKABLE QVariantMap getServiceNames();
+    Q_INVOKABLE QVariantMap getDeveloperNames();
+    Q_INVOKABLE QVariantMap getPublisherNames();
+
     Q_INVOKABLE bool addPlatform(QString name, int gen, int year, int month, int day);
     Q_INVOKABLE bool addService(QString name);
     Q_INVOKABLE bool addDeveloper(QString name);

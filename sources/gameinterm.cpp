@@ -22,6 +22,62 @@ GameInterm::GameInterm(QObject *parent) :
 }
 
 /*!
+ * \brief Returns a list of all platforms' names together with their IDs.
+ * \return A QVariantMap (synonymous with QMap<QString, QVariant>) of the form <Name: QString, ID: int>.\n Returns an empty list if there are no entries.
+ */
+QVariantMap GameInterm::getPlatformNames() {
+    QMap<int, QString> dbPlatNames(infoDatabase.getPlatformNames());
+    QMap<QString, QVariant> qmlPlatNames;
+
+    for (QMap<int, QString>::const_iterator it(dbPlatNames.cbegin()), end = dbPlatNames.cend(); it != end; ++it)
+        qmlPlatNames.insert(it.value(), it.key());
+
+    return qmlPlatNames;
+}
+
+/*!
+ * \brief Returns a list of all services' names together with their IDs.
+ * \return A QVariantMap (synonymous with QMap<QString, QVariant>) of the form <Name: QString, ID: int>.\n Returns an empty list if there are no entries.
+ */
+QVariantMap GameInterm::getServiceNames() {
+    QMap<int, QString> dbServNames(infoDatabase.getServiceNames());
+    QMap<QString, QVariant> qmlServNames;
+
+    for (QMap<int, QString>::const_iterator it(dbServNames.cbegin()), end = dbServNames.cend(); it != end; ++it)
+        qmlServNames.insert(it.value(), it.key());
+
+    return qmlServNames;
+}
+
+/*!
+ * \brief Returns a list of all developers' names together with their IDs.
+ * \return A QVariantMap (synonymous with QMap<QString, QVariant>) of the form <Name: QString, ID: int>.\n Returns an empty list if there are no entries.
+ */
+QVariantMap GameInterm::getDeveloperNames() {
+    QMap<int, QString> dbDevNames(infoDatabase.getDeveloperNames());
+    QMap<QString, QVariant> qmlDevNames;
+
+    for (QMap<int, QString>::const_iterator it(dbDevNames.cbegin()), end = dbDevNames.cend(); it != end; ++it)
+        qmlDevNames.insert(it.value(), it.key());
+
+    return qmlDevNames;
+}
+
+/*!
+ * \brief Returns a list of all publishers' names together with their IDs.
+ * \return A QVariantMap (synonymous with QMap<QString, QVariant>) of the form <Name: QString, ID: int>.\n Returns an empty list if there are no entries.
+ */
+QVariantMap GameInterm::getPublisherNames() {
+    QMap<int, QString> dbPubNames(infoDatabase.getPublisherNames());
+    QMap<QString, QVariant> qmlPubNames;
+
+    for (QMap<int, QString>::const_iterator it(dbPubNames.cbegin()), end = dbPubNames.cend(); it != end; ++it)
+        qmlPubNames.insert(it.value(), it.key());
+
+    return qmlPubNames;
+}
+
+/*!
  * \brief Requests the Infodatabase to add the given Platform.
  * \param name = The name of the platform
  * \param gen = The console generation of the platform
