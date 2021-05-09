@@ -11,7 +11,7 @@ Window {
     maximumHeight: height
     color: "black"
     title: "Add Game"
-    id: addGameWindow
+    id: gameForm
 
     Column {
         id: column
@@ -261,7 +261,7 @@ Window {
             Button {
                 id: btnCancel
                 text: "Cancel"
-                onClicked: addGameWindow.close();
+                onClicked: gameForm.close();
             }
 
             Button {
