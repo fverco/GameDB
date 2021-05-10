@@ -289,6 +289,7 @@ Window {
             Button {
                 id: btnAdd
                 text: "Add"
+                onClicked: Logic.addNewGame();
             }
         }
     }
@@ -296,10 +297,15 @@ Window {
     FileDialog {
         id: fileDialog
         folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
-        nameFilters: ["Image files (*.jpeg *.jpg *.png *.gif *.bmp)"]
+        nameFilters: ["Image files (*.jpeg *.jpg *.png *.bmp)"]
         fileMode: FileDialog.OpenFile
         options: FileDialog.ReadOnly
-        onAccepted: coverField.text = file;
+        onAccepted: {
+                let filePath = file.toString();
+                // remove the prefixed "file:///"
+                filePath = filePath.replace(/^(file:\/{3})/,"");
+                coverField.text = filePath;
+            }
     }
 
     MessageDialog {
