@@ -2,6 +2,7 @@
 #define INFODATABASE_H
 
 #include "database.h"
+#include "game.h"
 #include "platform.h"
 #include "service.h"
 #include "developer.h"
@@ -27,6 +28,7 @@ public:
     QMap<int, QString> getDeveloperNames();
     QMap<int, QString> getPublisherNames();
 
+    bool addGame(const Game &game);
     bool addPlatform(const Platform &plat);
     bool addService(const Service &serv);
     bool addDeveloper(const Developer &dev);

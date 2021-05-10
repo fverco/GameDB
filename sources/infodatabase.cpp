@@ -5,6 +5,7 @@
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
+#include <QSqlError>
 
 /*!
  * \brief Instantiates the info database object.
@@ -99,8 +100,7 @@ bool InfoDatabase::createDatabase(const QString &dir) {
                             "FOREIGN KEY (plat_id) REFERENCES Platform (plat_id),"
                             "FOREIGN KEY (serv_id) REFERENCES Service (serv_id),"
                             "FOREIGN KEY (dev_id) REFERENCES Developer (dev_id),"
-                            "FOREIGN KEY (pub_id) REFERENCES Publisher (pub_id),"
-                            "FOREIGN KEY (cover_id) REFERENCES Cover (cover_id));");
+                            "FOREIGN KEY (pub_id) REFERENCES Publisher (pub_id));");
 
             if (infoQry.exec()) {
                 createdDb = true;
@@ -220,6 +220,52 @@ QMap<int, QString> InfoDatabase::getPublisherNames() {
     closeDb();
 
     return pubMap;
+}
+
+/*!
+ * \brief Adds a new game entry to the database.
+ * \param game = The new game
+ * \return A bool value that's true if it was successful.
+ * \note IDs are not verified here, so be careful what you add.
+ */
+bool InfoDatabase::addGame(const Game &game) {
+    openDb();
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("INSERT INTO Game (name, exclusive, expansion, release_date)"
+                        "VALUES (?, ?, ?, ?)");
+    qryInfo.addBindValue(game.getName());
+    qryInfo.addBindValue(game.getExclusive());
+    qryInfo.addBindValue(game.getExpansion());
+    qryInfo.addBindValue(game.getReleaseDate().startOfDay().toSecsSinceEpoch());
+
+    if (qryInfo.exec()) {
+        int gameId(qryInfo.lastInsertId().toInt());
+
+        qryInfo.prepare("INSERT INTO copy (game_id, plat_id, serv_id, dev_id, pub_id, cover_id, physical, edition, date_added)"
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        qryInfo.addBindValue(gameId);
+        qryInfo.addBindValue(game.getPlatId());
+        qryInfo.addBindValue(game.getServId());
+        qryInfo.addBindValue(game.getDevId());
+        qryInfo.addBindValue(game.getPubId());
+        qryInfo.addBindValue(game.getCoverId());
+        qryInfo.addBindValue(game.getPhysical());
+        qryInfo.addBindValue(game.getEdition());
+        qryInfo.addBindValue(QDateTime::currentDateTime().toSecsSinceEpoch());
+
+        if (qryInfo.exec()) {
+            closeDb();
+            return true;
+        } else {
+            closeDb();
+            return false;
+        }
+    } else {
+        closeDb();
+        return false;
+    }
+
 }
 
 /*!
