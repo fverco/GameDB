@@ -19,6 +19,18 @@ public:
          const int &puid,
          const int &cid,
          const QString &n);
+    Game(const int &gid,
+         const int &plid,
+         const int &sid,
+         const int &did,
+         const int &puid,
+         const QString &n,
+         const QString &ed,
+         const bool &excl,
+         const bool &exp,
+         const bool &phys,
+         const QDate &rel,
+         const int &cid);
     Game(const Game &otherGame);
     Game& operator=(const Game& otherGame);
 
@@ -28,6 +40,7 @@ public:
     void setPubId(const int &puid);
     void setCoverId(const int &cid);
     void setCoverImage(const QByteArray &cover);
+    void setCoverImage(const QString &filePath);
     void setExclusive(const bool &excl);
     void setExpansion(const bool &exp);
     void setReleaseDate(const QDate &rel);
@@ -48,6 +61,8 @@ public:
     QString getEdition() const;
     QDate getDateAdded() const;
     EntryTypes getEntryType() const;
+
+    static QByteArray imageFromFile(const QString &filePath);
 
 private:
     int platId;             ///< The platform ID

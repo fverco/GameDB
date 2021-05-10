@@ -1,5 +1,8 @@
 #include "headers/game.h"
 
+#include <QPixmap>
+#include <QBuffer>
+
 /*!
  * \brief Creates a game object with default values.
  * \param gid = The game ID in the database
@@ -12,13 +15,13 @@
  * \note Any id that is not provided must be -1.
  */
 Game::Game(
-     const int &gid,
-     const int &plid,
-     const int &sid,
-     const int &did,
-     const int &puid,
-     const int &cid,
-     const QString &n) :
+        const int &gid,
+        const int &plid,
+        const int &sid,
+        const int &did,
+        const int &puid,
+        const int &cid,
+        const QString &n) :
     Entry(gid, n),
     platId(plid),
     servId(sid),
@@ -31,6 +34,35 @@ Game::Game(
     releaseDate(QDate(2000,1,1)),
     physical(false),
     edition("Standard Edition"),
+    dateAdded(QDate(2000,1,1))
+{
+}
+
+Game::Game(
+        const int &gid,
+        const int &plid,
+        const int &sid,
+        const int &did,
+        const int &puid,
+        const QString &n,
+        const QString &ed,
+        const bool &excl,
+        const bool &exp,
+        const bool &phys,
+        const QDate &rel,
+        const int &cid) :
+    Entry(gid, n),
+    platId(plid),
+    servId(sid),
+    devId(did),
+    pubId(puid),
+    coverId(cid),
+    coverImage(""),
+    exclusive(excl),
+    expansion(exp),
+    releaseDate(rel),
+    physical(phys),
+    edition(ed),
     dateAdded(QDate(2000,1,1))
 {
 }
@@ -126,6 +158,14 @@ void Game::setCoverId(const int &cid) {
  */
 void Game::setCoverImage(const QByteArray &cover) {
     coverImage = cover;
+}
+
+/*!
+ * \brief Assigns a new cover image for the game.
+ * \param filePath = The path to the new cover image
+ */
+void Game::setCoverImage(const QString &filePath) {
+    coverImage = imageFromFile(filePath);
 }
 
 /*!
@@ -279,4 +319,19 @@ QDate Game::getDateAdded() const {
  */
 EntryTypes Game::getEntryType() const {
     return EntryTypes::Game;
+}
+
+/*!
+ * \brief Loads an image from a file.
+ * \param filePath = The path of the image file
+ * \return A QByteArray containing the image in binary form.
+ */
+QByteArray Game::imageFromFile(const QString &filePath) {
+    QPixmap img(filePath);
+    QByteArray array;
+    QBuffer buffer(&array);
+    buffer.open(QIODevice::WriteOnly);
+    img.save(&buffer);
+
+    return array;
 }
