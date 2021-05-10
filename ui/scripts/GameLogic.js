@@ -1,3 +1,47 @@
+// Takes all the provided values and add them as a new game.
+function addNewGame() {
+
+    // Get the values.
+    let name = nameField.text,
+        plat = platBox.currentValue,
+        serv = servBox.currentValue,
+        dev = servBox.currentValue,
+        pub = pubBox.currentValue,
+        edition = editionField.text,
+        exclusive = (exclusiveCheck.checkState === Qt.Checked) ? true : false,
+        expansion = (expansionCheck.checkState === Qt.Checked) ? true : false,
+        physical = (physicalCheck.checkState === Qt.Checked) ? true : false,
+        year = parseInt(yearField.text),
+        month = parseInt(monthField.text),
+        day = parseInt(dayField.text),
+        coverImg = coverField.text;
+
+    // Verify their validity.
+    if (name.length > 0 &&
+            plat &&
+            serv &&
+            dev &&
+            pub &&
+            edition.length > 0 &&
+            yearField.text.length === 4 &&
+            month < 13 && month > 0 &&
+            day < 32 && day > 0)
+    {
+        // Add the game and provide a message.
+        if (gameInterm.addGame(name, plat, serv, dev, pub, edition, exclusive, expansion, physical, year, month, day, coverImg)) {
+            messageDialog.text = "Game successfully added.";
+            messageDialog.open();
+            messageDialog.closeWindow = true;
+        } else {
+            messageDialog.text = "Error occurred while adding new game.";
+            messageDialog.open();
+        }
+    } else {
+        messageDialog.text = "Please provide valid details for the game.\nA cover image is optional.";
+        messageDialog.open();
+    }
+}
+
 // Populates all the comboboxes in the window.
 function poplulateComboBoxes() {
     let emptyLists = "";
