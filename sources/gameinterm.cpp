@@ -78,6 +78,49 @@ QVariantMap GameInterm::getPublisherNames() {
 }
 
 /*!
+ * \brief Requests the Infodatabase to add the given Game.
+ * \param name = The name of the game
+ * \param platId = Its platform ID
+ * \param servId = Its service ID
+ * \param devId = Its developer ID
+ * \param pubId = Its publisher ID
+ * \param edition = The edition of the game
+ * \param excl = Is the game a platform exclusive?
+ * \param exp = Is the game an expansion/DLC?
+ * \param phys = Is the game a physical copy?
+ * \param year = Release year of the game
+ * \param month = Release month of the game
+ * \param day = Release day of the game
+ * \param coverImg = The path to the cover image
+ * \return A bool value that's true if the request was successful.
+ */
+bool GameInterm::addGame(QString name,
+             int platId,
+             int servId,
+             int devId,
+             int pubId,
+             QString edition,
+             bool excl,
+             bool exp,
+             bool phys,
+             int year,
+             int month,
+             int day,
+             QString coverImg)
+{
+    Game newGame(-1, platId, servId, devId, pubId, name, edition, excl, exp, phys, QDate(year, month, day), -1);
+
+    if (coverImg.length() > 0) {
+        if (imageDatabase.addCover(coverImg)) {
+            newGame.setCoverId(imageDatabase.getLastCoverId());
+        } else
+            return false;
+    }
+
+    return infoDatabase.addGame(newGame);
+}
+
+/*!
  * \brief Requests the Infodatabase to add the given Platform.
  * \param name = The name of the platform
  * \param gen = The console generation of the platform

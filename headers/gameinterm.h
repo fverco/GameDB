@@ -20,7 +20,24 @@ public:
     Q_INVOKABLE QVariantMap getDeveloperNames();
     Q_INVOKABLE QVariantMap getPublisherNames();
 
-    Q_INVOKABLE bool addPlatform(QString name, int gen, int year, int month, int day);
+    Q_INVOKABLE bool addGame(QString name,
+                             int platId,
+                             int servId,
+                             int devId,
+                             int pubId,
+                             QString edition,
+                             bool excl,
+                             bool exp,
+                             bool phys,
+                             int year,
+                             int month,
+                             int day,
+                             QString coverImg);
+    Q_INVOKABLE bool addPlatform(QString name,
+                                 int gen,
+                                 int year,
+                                 int month,
+                                 int day);
     Q_INVOKABLE bool addService(QString name);
     Q_INVOKABLE bool addDeveloper(QString name);
     Q_INVOKABLE bool addPublisher(QString name);
