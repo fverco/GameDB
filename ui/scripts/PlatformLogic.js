@@ -3,10 +3,10 @@ function addNewPlatform() {
 
     // Get the values.
     let name = nameField.text,
-    gen = genSpin.value,
-    year = parseInt(yearField.text),
-    month = parseInt(monthField.text),
-    day = parseInt(dayField.text);
+        gen = genSpin.value,
+        year = parseInt(yearField.text),
+        month = parseInt(monthField.text),
+        day = parseInt(dayField.text);
 
     // Verify their validity.
     if (name.length > 0 &&
