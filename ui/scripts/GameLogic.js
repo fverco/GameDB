@@ -5,7 +5,7 @@ function addNewGame() {
     let name = nameField.text,
         plat = platBox.currentValue,
         serv = servBox.currentValue,
-        dev = servBox.currentValue,
+        dev = devBox.currentValue,
         pub = pubBox.currentValue,
         edition = editionField.text,
         exclusive = (exclusiveCheck.checkState === Qt.Checked) ? true : false,
