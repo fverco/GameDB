@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QSysInfo>
 
 const QList<QString> ImageDatabase::supportedSuffixes({"jpg", "jpeg", "png", "bmp"});
 
@@ -65,7 +66,14 @@ bool ImageDatabase::createDatabase(const QString &imgDir) {
  * \see getLastCoverId()
  */
 bool ImageDatabase::addCover(const QString &filePath) {
-    QPixmap pixImg(filePath);
+
+    QPixmap pixImg;
+
+    if (QSysInfo::kernelType() == "winnt")
+        pixImg.load(filePath);
+    else
+        pixImg.load("/" + filePath);
+
     QString suffix(getFileSuffix(filePath));
 
     return addCover(pixImg, suffix);
