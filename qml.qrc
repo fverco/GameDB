@@ -13,5 +13,7 @@
         <file>ui/scripts/WindowTypes.js</file>
         <file>ui/scripts/PlatformLogic.js</file>
         <file>ui/scripts/GameLogic.js</file>
+        <file>ui/scripts/LibraryLogic.js</file>
+        <file>ui/forms/Library.qml</file>
     </qresource>
 </RCC>
