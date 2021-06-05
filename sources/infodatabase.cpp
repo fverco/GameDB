@@ -9,11 +9,12 @@
 
 /*!
  * \brief Instantiates the info database object.
- * \param parent = The QObject to which this database is binded.
+ * \param conName = The name of the connection (Must be unique)
+ * \param parent = The QObject to which this database is binded
  */
-InfoDatabase::InfoDatabase(QObject *parent) :
+InfoDatabase::InfoDatabase(const QString &conName, QObject *parent) :
     Database(parent),
-    infoDb(QSqlDatabase::addDatabase("QSQLITE", "info"))
+    infoDb(QSqlDatabase::addDatabase("QSQLITE", conName))
 {
 }
 
@@ -222,13 +223,87 @@ QMap<int, QString> InfoDatabase::getPublisherNames() {
     return pubMap;
 }
 
+int InfoDatabase::getGameCopyCount() {
+    openDb();
+
+    int count(0);
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("SELECT COUNT(*) FROM Copy");
+    if (qryInfo.exec()) {
+        if (qryInfo.next())
+            count = qryInfo.value(0).toInt();
+    }
+
+    closeDb();
+
+    return count;
+}
+
+QList<QMap<GameList::Attributes, QPair<int, QString> > > InfoDatabase::getGameList()
+{
+    openDb();
+
+    QList<QMap<GameList::Attributes, QPair<int, QString> > > gameList;
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("SELECT c.game_id, g.name, c.plat_id, pl.name, c.serv_id, s.name, c.dev_id, d.name, c.pub_id, pu.name, c.cover_id, g.exclusive, g.expansion, c.physical, c.edition, g.release_date "
+                    "FROM Copy c INNER JOIN Game g ON g.game_id = c.game_id "
+                                "INNER JOIN Platform pl ON pl.plat_id = c.plat_id "
+                                "INNER JOIN Service s ON s.serv_id = c.serv_id "
+                                "INNER JOIN Developer d on d.dev_id = c.dev_id "
+                                "INNER JOIN Publisher pu on pu.pub_id = c.pub_id "
+                    "ORDER BY pl.name, g.name");
+
+    if (qryInfo.exec()) {
+        QMap<GameList::Attributes, QPair<int, QString> > game;
+        int columnA(0), columnB(1);
+
+        while (qryInfo.next()) {
+
+            // Add Name, Platform, Service, Developer and Publisher (with their IDs),
+            for (int i(GameList::Attributes::Name); i < GameList::Attributes::Cover; ++i) {
+                game.insert(static_cast<GameList::Attributes>(i), qMakePair(qryInfo.value(columnA).toInt(), qryInfo.value(columnB).toString()));
+                columnA += 2;
+                columnB += 2;
+            }
+
+            // Add Cover ID without the cover path (The path must be acquired from the ImageDatabase).
+            game.insert(GameList::Attributes::Cover, qMakePair(qryInfo.value(columnA++).toInt(), ""));
+
+            // Add Exclusive, Expansion, Physical and Edition (no IDs).
+            for (int i(GameList::Attributes::Exclusive); i < GameList::Attributes::Year; ++i) {
+                game.insert(static_cast<GameList::Attributes>(i), qMakePair(-1, qryInfo.value(columnA++).toString()));
+            }
+
+            // Get date from Unix time.
+            QDateTime relDate(QDateTime::fromSecsSinceEpoch(qryInfo.value(columnA).toInt()));
+
+            // Add Year, Month and Day (no IDs).
+            game.insert(GameList::Attributes::Year, qMakePair(-1, QString::number(relDate.date().year())));
+            game.insert(GameList::Attributes::Month, qMakePair(-1, QString::number(relDate.date().month())));
+            game.insert(GameList::Attributes::Day, qMakePair(-1, QString::number(relDate.date().day())));
+
+            gameList.append(game);
+
+            columnA = 0;
+            columnB = 1;
+            game.clear();
+        }
+    } else
+        qDebug() << "(InfoDB) Game list query error: " + qryInfo.lastError().text();
+
+    closeDb();
+    return gameList;
+}
+
 /*!
  * \brief Adds a new game entry to the database.
  * \param game = The new game
  * \return A bool value that's true if it was successful.
  * \note IDs are not verified here, so be careful what you add.
  */
-bool InfoDatabase::addGame(const Game &game) {
+bool InfoDatabase::addGame(Game &game) {
     openDb();
     QSqlQuery qryInfo(infoDb);
 
@@ -240,11 +315,11 @@ bool InfoDatabase::addGame(const Game &game) {
     qryInfo.addBindValue(game.getReleaseDate().startOfDay().toSecsSinceEpoch());
 
     if (qryInfo.exec()) {
-        int gameId(qryInfo.lastInsertId().toInt());
+        game.setId(qryInfo.lastInsertId().toInt());
 
         qryInfo.prepare("INSERT INTO copy (game_id, plat_id, serv_id, dev_id, pub_id, cover_id, physical, edition, date_added)"
                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        qryInfo.addBindValue(gameId);
+        qryInfo.addBindValue(game.getId());
         qryInfo.addBindValue(game.getPlatId());
         qryInfo.addBindValue(game.getServId());
         qryInfo.addBindValue(game.getDevId());
@@ -258,10 +333,12 @@ bool InfoDatabase::addGame(const Game &game) {
             closeDb();
             return true;
         } else {
+            qDebug() << "(InfoDB) Add copy query error: " + qryInfo.lastError().text();
             closeDb();
             return false;
         }
     } else {
+        qDebug() << "(InfoDB) Add game query error: " + qryInfo.lastError().text();
         closeDb();
         return false;
     }
@@ -287,6 +364,7 @@ bool InfoDatabase::addPlatform(const Platform &plat) {
         closeDb();
         return true;
     } else {
+        qDebug() << "(InfoDB) Add platform query error: " + qryInfo.lastError().text();
         closeDb();
         return false;
     }
@@ -309,6 +387,7 @@ bool InfoDatabase::addService(const Service &serv) {
         closeDb();
         return true;
     } else {
+        qDebug() << "(InfoDB) Add service query error: " + qryInfo.lastError().text();
         closeDb();
         return false;
     }
@@ -331,6 +410,7 @@ bool InfoDatabase::addDeveloper(const Developer &dev) {
         closeDb();
         return true;
     } else {
+        qDebug() << "(InfoDB) Add developer query error: " + qryInfo.lastError().text();
         closeDb();
         return false;
     }
@@ -353,6 +433,7 @@ bool InfoDatabase::addPublisher(const Publisher &pub) {
         closeDb();
         return true;
     } else {
+        qDebug() << "(InfoDB) Add publisher query error: " + qryInfo.lastError().text();
         closeDb();
         return false;
     }
