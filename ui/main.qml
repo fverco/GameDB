@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 import "./forms"
 import "./components"
 import "./scripts/MainLogic.js" as Logic
@@ -97,7 +97,7 @@ ApplicationWindow {
 
     StackView {
         id: stackView
-        initialItem: "./forms/LibraryForm.ui.qml"
+        initialItem: "./forms/Library.qml"
         anchors.fill: parent
     }
 }
