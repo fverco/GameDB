@@ -439,6 +439,24 @@ bool InfoDatabase::addPublisher(const Publisher &pub) {
     }
 }
 
+bool InfoDatabase::resetCoverData()
+{
+    openDb();
+    QSqlQuery qryInfo(infoDb);
+
+    qryInfo.prepare("UPDATE Copy "
+                    "SET cover_id = -1;");
+
+    if (qryInfo.exec()) {
+        closeDb();
+        return true;
+    } else {
+        qDebug() << "(InfoDB) Reset cover data error: " + qryInfo.lastError().text();
+        closeDb();
+        return false;
+    }
+}
+
 /*!
  * \brief Opens a connection to the database file, if it's not open already.
  */

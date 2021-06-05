@@ -59,6 +59,7 @@ public:
 signals:
 
 public slots:
+    bool resetCoverData();
 
 private:
     QSqlDatabase infoDb;    ///< The database object that contains the SQLite database

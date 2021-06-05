@@ -14,6 +14,8 @@ GameInterm::GameInterm(QObject *parent) :
     infoDatabase("GameIntermInfoCon", this),
     imageDatabase("GameIntermImageCon", this)
 {
+    connect(&imageDatabase, &ImageDatabase::imageDatabaseReset, &infoDatabase, &InfoDatabase::resetCoverData);
+
     if (!infoDatabase.createDatabase())
         QGuiApplication::quit();
 
