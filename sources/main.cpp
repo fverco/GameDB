@@ -13,11 +13,17 @@
  */
 
 #include "headers/gameinterm.h"
+#include "headers/gamelistmodel.h"
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtDebug>
+
+void initializeGameComponents(QQmlApplicationEngine &engine, GameInterm &gameInterm, GameListModel &gameListModel) {
+    engine.rootContext()->setContextProperty(QStringLiteral("gameInterm"), &gameInterm);
+    engine.rootContext()->setContextProperty(QStringLiteral("gameListModel"), &gameListModel);
+}
 
 /*!
  * \brief Start the application.
@@ -33,6 +39,8 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
+    qmlRegisterUncreatableMetaObject(GameList::staticMetaObject, "gamelist.attributes", 1, 0, "GameListAttributes", "Not creatable. This is an enum type.");
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/ui/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -42,7 +50,8 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
 
     GameInterm gameInterm;
-    engine.rootContext()->setContextProperty(QStringLiteral("gameInterm"), &gameInterm);
+    GameListModel gameListModel;
+    initializeGameComponents(engine, gameInterm, gameListModel);
 
     engine.load(url);
 
