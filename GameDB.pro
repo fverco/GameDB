@@ -7,6 +7,7 @@ CONFIG += c++17
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        sources/gamelistmodel.cpp \
         sources/database.cpp \
         sources/developer.cpp \
         sources/developerchanges.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     headers/game.h \
     headers/gamechanges.h \
     headers/gameinterm.h \
+    headers/gamelistmodel.h \
     headers/imagedatabase.h \
     headers/infodatabase.h \
     headers/platform.h \
